@@ -81,16 +81,15 @@ public class TextAnalyzer {
             // convert the html formatted line to plain text
             String filteredInputLine = htmlToText(inputLine);
 
-            if (filteredInputLine.length() > 1) {
-                // extract words from filteredInputLine using StringTokenizer
-                StringTokenizer wordsInLine = new StringTokenizer(filteredInputLine);
+            // extract words from filteredInputLine using StringTokenizer
+            StringTokenizer wordsInLine = new StringTokenizer(filteredInputLine);
 
-                // add words and their frequencies to the wordCount HashMap
-                while (wordsInLine.hasMoreTokens()) {
-                    String word = wordsInLine.nextToken();
-                    Integer wordFrequency = wordCount.get(word);
-                    wordCount.put(word, (wordFrequency == null) ? 1 : wordFrequency + 1);
-                }
+            // add words and their frequencies to the wordCount HashMap
+            while (wordsInLine.hasMoreTokens()) {
+                String word = wordsInLine.nextToken();
+                Integer currentWordFrequency = wordCount.get(word);
+                int newWordFrequency = currentWordFrequency == null ? 1 : currentWordFrequency + 1;
+                wordCount.put(word, newWordFrequency);
             }
         }
 
