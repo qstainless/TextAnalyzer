@@ -1,15 +1,12 @@
 /*
  * @author Guillermo Castaneda Echegaray
  * @version 1.0
- * @course CEN 3024C-27021
+ * @course CEN 3024C-27021 Software Development I
  * @instructor Dr. Lisa Macon
- * Assignment Description
- * Write a text analyzer that reads a file and outputs
- * statistics about that file. It should output the word
- * frequencies of all words in the file, sorted by the
- * most frequently used word. The output should be a set of
- * pairs, each pair containing a word and how many times it
- * occurred in the file.
+ * Text analyzer that reads a file and outputs statistics about that file. It
+ * should output the word frequencies of all words in the file, sorted by the
+ * most frequently used word. The output displays a set of pairs, each pair
+ * containing a word and how many times it occurred in the file.
  */
 
 package com.gce;
