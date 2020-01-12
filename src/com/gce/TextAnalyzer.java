@@ -116,11 +116,8 @@ public class TextAnalyzer {
         filteredInputLine = filteredInputLine.replaceAll("<.*", "");
         filteredInputLine = filteredInputLine.replaceAll(".*?>", "");
 
-        // hack to remove menu at top of page; may break html sources where the pipe is part of the text to parse
-        filteredInputLine = filteredInputLine.replaceAll("[|]", "").trim();
-
         // strip punctuation except apostrophe (single quote) to allow for poetic contractions
-        filteredInputLine = filteredInputLine.replaceAll("[[.?!,;:{}()]]", "");
+        filteredInputLine = filteredInputLine.replaceAll("[|.?!,;:{}()]", "").trim();
 
         // hack to strip multiple double dashes in the text
         filteredInputLine = filteredInputLine.replaceAll("--", " ");
