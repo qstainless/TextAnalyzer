@@ -44,7 +44,7 @@ public class TextAnalyzer {
         HashMap<String, Integer> wordFrequencies = countWordFrequenciess(urlContent);
 
         // Sort the words by frequency
-        ArrayList<HashMap.Entry<String, Integer>> sortedWordList = sortWords(wordFrequencies);
+        ArrayList<HashMap.Entry<String, Integer>> sortedWordList = sortWordsByFrequency(wordFrequencies);
 
         // Display the word frequencies
         displayWordRankings(sortedWordList);
@@ -134,7 +134,7 @@ public class TextAnalyzer {
      * @param wordCount The HashMap with words and their frequencies
      * @return The sortedWordList
      */
-    private static ArrayList<HashMap.Entry<String, Integer>> sortWords(HashMap<String, Integer> wordCount) {
+    private static ArrayList<HashMap.Entry<String, Integer>> sortWordsByFrequency(HashMap<String, Integer> wordCount) {
         // create and populate an ArrayList with the words in the wordCount HashMap and their frequencies
         ArrayList<HashMap.Entry<String, Integer>> sortedWordList = new ArrayList<HashMap.Entry<String, Integer>>(wordCount.entrySet());
 
