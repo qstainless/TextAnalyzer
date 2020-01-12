@@ -101,28 +101,24 @@ public class TextAnalyzer {
 
     /**
      * Converts each line of the inputFile from html to plain text
-     * TODO: There must be a better, more efficient way to do this
+     *
+     * TODO:
+     * There must be a better, more efficient way to do this.
+     * Currently will not properly handle tag properties on
+     * multiple lines without a "<" or ">"
      *
      * @param inputLine The string to convert from html to plain text
-     * @return The filteredInputLine
+     * @return The plain text inputLine
      */
     private static String htmlToText(String inputLine) {
-        String filteredInputLine = inputLine;
-
-        // convert all characters in each line to lower case and strip html tags
-        filteredInputLine = filteredInputLine.toLowerCase().replaceAll("<.*?>", "").trim();
-
-        // hack to catch lines that do not have an opened or closed tags that span more than one line
-        filteredInputLine = filteredInputLine.replaceAll("<.*", "");
-        filteredInputLine = filteredInputLine.replaceAll(".*?>", "");
-
-        // strip punctuation except apostrophe (single quote) to allow for poetic contractions
-        filteredInputLine = filteredInputLine.replaceAll("[|.?!,;:{}()]", "").trim();
-
-        // hack to strip multiple double dashes in the text
-        filteredInputLine = filteredInputLine.replaceAll("--", " ");
-
-        return filteredInputLine;
+        return inputLine
+                .toLowerCase()                   // convert to lower case
+                .replaceAll("<.*?>", "")         // strip html tags
+                .replaceAll("<.*", "")           // hack: strip unclosed tags
+                .replaceAll(".*?>", "")          // hack: strip unopened tags
+                .replaceAll("[|.?!,;:{}()]", "") // strip punctuation
+                .replaceAll("--", " ")           // strip multiple double dashes found in the text
+                .trim();                         // trim any remaining whitespace around each line
     }
 
     /**
