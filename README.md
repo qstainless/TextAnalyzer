@@ -5,3 +5,6 @@ Outputs the word frequencies of all words in the file, sorted by the most freque
 The output shows a set of pairs, each pair containing a word and how many times it occurred in the file, ordered by
 frequency in descending order.
 
+Console output:
+
+![Top 20 words](TextAnalyzer-Screenshot.png)
