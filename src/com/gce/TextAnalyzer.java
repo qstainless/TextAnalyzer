@@ -41,7 +41,7 @@ public class TextAnalyzer {
         BufferedReader urlContent = fetchUrlContent();
 
         // Count the word frequencies
-        HashMap<String, Integer> wordFrequencies = countWordFrequenciess(urlContent);
+        HashMap<String, Integer> wordFrequencies = countWordFrequencies(urlContent);
 
         // Sort the words by frequency
         ArrayList<HashMap.Entry<String, Integer>> sortedWordList = sortWordsByFrequency(wordFrequencies);
@@ -67,7 +67,7 @@ public class TextAnalyzer {
      * @return The wordCount HashMap
      * @throws IOException
      */
-    private static HashMap<String, Integer> countWordFrequenciess(BufferedReader urlContent) throws IOException {
+    private static HashMap<String, Integer> countWordFrequencies(BufferedReader urlContent) throws IOException {
         // temp string to store each line of the buffered inputUrl
         String inputLine;
         // temp array to store the words extracted from the inputUrl
