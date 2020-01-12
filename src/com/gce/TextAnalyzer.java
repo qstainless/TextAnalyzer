@@ -88,8 +88,9 @@ public class TextAnalyzer {
                 // add words and their frequencies to the wordCount HashMap
                 while (wordsInLine.hasMoreTokens()) {
                     String word = wordsInLine.nextToken();
-                    Integer wordFrequency = wordCount.get(word);
-                    wordCount.put(word, (wordFrequency == null) ? 1 : wordFrequency + 1);
+                    Integer currentWordFrequency = wordCount.get(word);
+                    int newWordFrequency = currentWordFrequency == null ? 1 : currentWordFrequency + 1;
+                    wordCount.put(word, newWordFrequency);
                 }
             }
         }
