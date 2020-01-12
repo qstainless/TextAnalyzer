@@ -111,17 +111,17 @@ public class TextAnalyzer {
         String filteredInputLine = inputLine;
 
         // convert all characters in each line to lower case and strip html tags
-        filteredInputLine = filteredInputLine.toLowerCase().replaceAll("\\<.*?\\>", "").trim();
+        filteredInputLine = filteredInputLine.toLowerCase().replaceAll("<.*?>", "").trim();
 
         // hack to catch lines that do not have an opened or closed tags that span more than one line
-        filteredInputLine = filteredInputLine.replaceAll("\\<.*", "");
-        filteredInputLine = filteredInputLine.replaceAll(".*?\\>", "");
+        filteredInputLine = filteredInputLine.replaceAll("<.*", "");
+        filteredInputLine = filteredInputLine.replaceAll(".*?>", "");
 
         // hack to remove menu at top of page; may break html sources where the pipe is part of the text to parse
-        filteredInputLine = filteredInputLine.replaceAll("[\\|].*", "");
+        filteredInputLine = filteredInputLine.replaceAll("[|]", "").trim();
 
-        // strip punctuation
-        filteredInputLine = filteredInputLine.replaceAll("[[\\.\\?\\!\\,\\;\\:\\{\\}\\(\\)\\']]", "");
+        // strip punctuation except apostrophe (single quote)
+        filteredInputLine = filteredInputLine.replaceAll("[[.?!,;:{}()]]", "");
 
         // hack to strip multiple double dashes in the text
         filteredInputLine = filteredInputLine.replaceAll("--", " ");
