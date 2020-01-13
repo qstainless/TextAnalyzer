@@ -150,8 +150,7 @@ public class TextAnalyzer {
 
         for (HashMap.Entry<String, Integer> temp : sortedWordList) {
             rank++;
-            System.out.format(outputFormat, "| " + rank + ".", "| " + temp.getKey(), "| " + temp.getValue(), "|");
-            System.out.println();
+            System.out.format(outputFormat, "| " + rank + ".", "| " + temp.getKey(), "| " + temp.getValue(), "|\n");
         }
 
         outputDivider();
@@ -162,8 +161,7 @@ public class TextAnalyzer {
      */
     private static void outputHeaders() {
         outputDivider();
-        System.out.printf(outputFormat, "| Rank", "| Word", "| Freq", "|");
-        System.out.println();
+        System.out.printf(outputFormat, "| Rank", "| Word", "| Freq", "|\n");
         outputDivider();
     }
 
