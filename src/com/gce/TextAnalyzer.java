@@ -46,7 +46,7 @@ public class TextAnalyzer {
             // Display the word frequencies
             displayWordRankings(sortedWordList);
         } catch (IOException e) {
-            System.out.println("An error occured. Unable to anayze content from URL: " + targetUrl);
+            System.out.println("An error occured. Unable to analyze content from URL: " + targetUrl);
         }
     }
 
