@@ -31,20 +31,23 @@ public class TextAnalyzer {
      * Main method
      *
      * @param args
-     * @throws IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         // Fetch the URL content
-        BufferedReader urlContent = fetchUrlContent();
+        try {
+            BufferedReader urlContent = fetchUrlContent();
 
-        // Count the word frequencies
-        HashMap<String, Integer> wordFrequencies = countWordFrequencies(urlContent);
+            // Count the word frequencies
+            HashMap<String, Integer> wordFrequencies = countWordFrequencies(urlContent);
 
-        // Sort the words by frequency
-        ArrayList<HashMap.Entry<String, Integer>> sortedWordList = sortWordsByFrequency(wordFrequencies);
+            // Sort the words by frequency
+            ArrayList<HashMap.Entry<String, Integer>> sortedWordList = sortWordsByFrequency(wordFrequencies);
 
-        // Display the word frequencies
-        displayWordRankings(sortedWordList);
+            // Display the word frequencies
+            displayWordRankings(sortedWordList);
+        } catch (IOException e) {
+            System.out.println("An error occured. Unable to anayze content from URL: " + targetUrl);
+        }
     }
 
     /**
