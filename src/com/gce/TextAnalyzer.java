@@ -113,10 +113,13 @@ public class TextAnalyzer {
     private static String htmlToText(String inputLine) {
         return inputLine
                 .toLowerCase()                   // convert to lower case
+                .replaceAll(">'", ">")           // strip leading apostrophe after html tag
                 .replaceAll("<.*?>", "")         // strip html tags
-                .replaceAll("<.*", "")           // hack: strip unclosed tags
-                .replaceAll(".*?>", "")          // hack: strip unopened tags
-                .replaceAll("[|.?!,;:{}()]", "") // strip punctuation
+                .replaceAll("<.*", "")           // hack: strip unclosed html tags
+                .replaceAll(".*?>", "")          // hack: strip unopened html tags
+                .replaceAll(" '", " ")           // strip leading apostrophe after space
+                .replaceAll("[!.,]'", "")           // strip apostrophe after punctuation
+                .replaceAll("[|.?!,;:{}()]", "") // strip punctuation except apostrophe
                 .replaceAll("--", " ")           // strip multiple double dashes found in the text
                 .trim();                         // trim any remaining whitespace around each line
     }
