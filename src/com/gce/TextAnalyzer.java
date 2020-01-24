@@ -33,8 +33,8 @@ public class TextAnalyzer {
      * @param args
      */
     public static void main(String[] args) {
-        // Fetch the URL content
         try {
+            // Fetch the URL content
             BufferedReader urlContent = fetchUrlContent();
 
             // Count the word frequencies
