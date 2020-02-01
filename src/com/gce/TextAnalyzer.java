@@ -70,8 +70,6 @@ public class TextAnalyzer {
     private static HashMap<String, Integer> countWordFrequencies(BufferedReader urlContent) throws IOException {
         // temp string to store each line of the buffered inputUrl
         String inputLine;
-        // temp array to store the words extracted from the inputUrl
-        String[] words;
 
         // HashMap stores words as keys and frequency as values
         HashMap<String, Integer> wordCount = new HashMap<String, Integer>();
