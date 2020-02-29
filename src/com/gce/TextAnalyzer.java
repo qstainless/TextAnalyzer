@@ -27,12 +27,9 @@ public class TextAnalyzer {
     // For pretty output
     static String outputFormat = "%-7s %-22s %-8s %1s";
 
-    /**
-     * Main method
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
+    public static void analyzeUrl(String requestedUrl) {
+        targetUrl = requestedUrl;
+
         try {
             // Fetch the URL content
             BufferedReader urlContent = fetchUrlContent();
