@@ -22,7 +22,7 @@ import java.util.StringTokenizer;
 
 public class TextAnalyzer {
     // The target URL to parse
-    static String targetUrl = "http://shakespeare.mit.edu/macbeth/full.html";
+    static String targetUrl;
 
     // For pretty output
     static String outputFormat = "%-7s %-22s %-8s %1s";
