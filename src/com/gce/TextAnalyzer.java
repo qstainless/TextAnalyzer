@@ -152,6 +152,11 @@ public class TextAnalyzer {
         for (HashMap.Entry<String, Integer> temp : sortedWordList) {
             rank++;
             System.out.format(outputFormat, "| " + rank + ".", "| " + temp.getKey(), "| " + temp.getValue(), "|\n");
+
+            // Only display the top 20 words
+            if (rank == 20) {
+                break;
+            }
         }
 
         outputDivider();
