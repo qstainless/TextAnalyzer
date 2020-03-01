@@ -39,6 +39,23 @@ public class TextAnalyzerUIController implements Initializable {
 
         if (validUrl) {
             TextAnalyzer.analyzeUrl(urlTextField.getText());
+            targetUrl = urlTextField.getText();
+
+            try {
+                // Fetch the URL content
+                BufferedReader urlContent = fetchUrlContent();
+
+                // Count the word frequencies
+                HashMap<String, Integer> wordFrequencies = countWordFrequencies(urlContent);
+
+                // Sort the words by frequency
+                ArrayList<HashMap.Entry<String, Integer>> sortedWordList = sortWordsByFrequency(wordFrequencies);
+
+                // Display the word frequencies
+                displayWordRankings(sortedWordList);
+            } catch (IOException e) {
+                formValidation.textFieldNotEmpty(null, messageLabel, "An error occured. Unable to analyze content from URL: \"" + targetUrl + "\"");
+            }
         }
     }
 

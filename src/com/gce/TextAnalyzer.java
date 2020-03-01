@@ -27,26 +27,6 @@ public class TextAnalyzer {
     // For pretty output
     static String outputFormat = "%-7s %-22s %-8s %1s";
 
-    public static void analyzeUrl(String requestedUrl) {
-        targetUrl = requestedUrl;
-
-        try {
-            // Fetch the URL content
-            BufferedReader urlContent = fetchUrlContent();
-
-            // Count the word frequencies
-            HashMap<String, Integer> wordFrequencies = countWordFrequencies(urlContent);
-
-            // Sort the words by frequency
-            ArrayList<HashMap.Entry<String, Integer>> sortedWordList = sortWordsByFrequency(wordFrequencies);
-
-            // Display the word frequencies
-            displayWordRankings(sortedWordList);
-        } catch (IOException e) {
-            System.out.println("An error occured. Unable to analyze content from URL: \"" + targetUrl + "\"");
-        }
-    }
-
     /**
      * Fetch the URL to parse
      *
