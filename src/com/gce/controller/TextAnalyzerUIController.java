@@ -30,15 +30,14 @@ public class TextAnalyzerUIController implements Initializable {
     }
 
     @FXML
-    /**
-     * Simple form validation. A URL must be entered into the input field
-     * Does not check for valid URLs.
+    /*
+      Simple form validation. A URL must be entered into the input field
+      Does not check for valid URLs.
      */
-    private void validateUrl(String url) {
-        boolean validUrl = formValidation.textFieldNotEmpty(url, messageLabel, "The URL cannot be empty.");
+    private void analyzeUrl(String url) {
+        boolean validUrl = validateUrl(url);
 
         if (validUrl) {
-            TextAnalyzer.analyzeUrl(urlTextField.getText());
             targetUrl = urlTextField.getText();
 
             try {
@@ -59,8 +58,12 @@ public class TextAnalyzerUIController implements Initializable {
         }
     }
 
+    private boolean validateUrl(String url) {
+        return formValidation.textFieldNotEmpty(url, messageLabel, "The URL cannot be empty.");
+    }
+
     @FXML
     public void handleAnalyzeButtonAction(ActionEvent actionEvent) {
-        validateUrl(urlTextField.getText());
+        analyzeUrl(urlTextField.getText());
     }
 }
