@@ -22,7 +22,7 @@ import java.util.StringTokenizer;
 
 public class TextAnalyzer {
     // The target URL to parse
-    static String targetUrl;
+    public static String targetUrl;
 
     // For pretty output
     static String outputFormat = "%-7s %-22s %-8s %1s";
@@ -53,7 +53,7 @@ public class TextAnalyzer {
      * @return The buffered URL content
      * @throws IOException
      */
-    private static BufferedReader fetchUrlContent() throws IOException {
+    public static BufferedReader fetchUrlContent() throws IOException {
         return new BufferedReader(new InputStreamReader(new URL(targetUrl).openStream()));
     }
 
@@ -64,7 +64,7 @@ public class TextAnalyzer {
      * @return The wordCount HashMap
      * @throws IOException
      */
-    private static HashMap<String, Integer> countWordFrequencies(BufferedReader urlContent) throws IOException {
+    public static HashMap<String, Integer> countWordFrequencies(BufferedReader urlContent) throws IOException {
         // temp string to store each line of the buffered inputUrl
         String inputLine;
 
@@ -125,7 +125,7 @@ public class TextAnalyzer {
      * @param wordCount The HashMap with words and their frequencies
      * @return The sortedWordList
      */
-    private static ArrayList<HashMap.Entry<String, Integer>> sortWordsByFrequency(HashMap<String, Integer> wordCount) {
+    public static ArrayList<HashMap.Entry<String, Integer>> sortWordsByFrequency(HashMap<String, Integer> wordCount) {
         // create and populate an ArrayList with the words in the wordCount HashMap and their frequencies
         ArrayList<HashMap.Entry<String, Integer>> sortedWordList = new ArrayList<HashMap.Entry<String, Integer>>(wordCount.entrySet());
 
@@ -144,7 +144,7 @@ public class TextAnalyzer {
      *
      * @param sortedWordList The sortedWordList to display
      */
-    private static void displayWordRankings(ArrayList<HashMap.Entry<String, Integer>> sortedWordList) {
+    public static void displayWordRankings(ArrayList<HashMap.Entry<String, Integer>> sortedWordList) {
         int rank = 0;
 
         outputHeaders();
