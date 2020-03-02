@@ -24,9 +24,6 @@ public class TextAnalyzer {
     // The target URL to parse
     public static String targetUrl;
 
-    // For pretty output
-    static String outputFormat = "%-7s %-22s %-8s %1s";
-
     /**
      * Fetch the URL to parse
      *
@@ -127,35 +124,14 @@ public class TextAnalyzer {
     public static void displayWordRankings(ArrayList<HashMap.Entry<String, Integer>> sortedWordList) {
         int rank = 0;
 
-        outputHeaders();
-
         for (HashMap.Entry<String, Integer> temp : sortedWordList) {
             rank++;
-            System.out.format(outputFormat, "| " + rank + ".", "| " + temp.getKey(), "| " + temp.getValue(), "|\n");
 
             // Only display the top 20 words
             if (rank == 20) {
                 break;
             }
         }
-
-        outputDivider();
-    }
-
-    /**
-     * Outputs the table headers to the console
-     */
-    private static void outputHeaders() {
-        outputDivider();
-        System.out.printf(outputFormat, "| Rank", "| Word", "| Freq", "|\n");
-        outputDivider();
-    }
-
-    /**
-     * Outputs the table divider to the console
-     */
-    private static void outputDivider() {
-        System.out.println("+-------+----------------------+--------+");
     }
 }
 
