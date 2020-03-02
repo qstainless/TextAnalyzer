@@ -91,7 +91,7 @@ public class TextAnalyzer {
                 .replaceAll(".*?>", "")          // hack: strip unopened html tags
                 .replaceAll(" '", " ")           // strip leading apostrophe after space
                 .replaceAll("[!.,]'", "")           // strip apostrophe after punctuation
-                .replaceAll("[|.?!,;:{}()]", "") // strip punctuation except apostrophe
+                .replaceAll("[\\[|.?!,;:{}()\\]]", "") // strip punctuation except apostrophe
                 .replaceAll("--", " ")           // strip multiple double dashes found in the text
                 .trim();                         // trim any remaining whitespace around each line
     }
