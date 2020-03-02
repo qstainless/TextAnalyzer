@@ -48,11 +48,12 @@ public class TextAnalyzerUIController implements Initializable {
         wordFrequency.setCellValueFactory(new PropertyValueFactory<Word, Integer>("wordFrequency"));
     }
 
-    @FXML
-    /*
-      Simple form validation. A URL must be entered into the input field
-      Does not check for valid URLs.
+    /**
+     * Analyze the URL provided by the user
+     *
+     * @param url The user submitted URL
      */
+    @FXML
     private void analyzeUrl(String url) {
         boolean validUrl = validateUrl(url);
 
@@ -77,10 +78,20 @@ public class TextAnalyzerUIController implements Initializable {
         }
     }
 
+    /**
+     * Simple validation to make sure that the URL field is not empty.
+     * Does not check for valid URLs
+     *
+     * @param url The user submitted URL
+     * @return boolean True if the URL field is not empty, False otherwise
+     */
     private boolean validateUrl(String url) {
         return formValidation.textFieldNotEmpty(url, messageLabel, "The URL cannot be empty.");
     }
 
+    /**
+     * Action to perform when the Analyze! button is clicked
+     */
     @FXML
     public void handleAnalyzeButtonAction(ActionEvent actionEvent) {
         analyzeUrl(urlTextField.getText());

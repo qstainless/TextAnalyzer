@@ -1,3 +1,10 @@
+/*
+ * @author Guillermo Castaneda Echegaray
+ * @version 1.0
+ * @course CEN 3024C-27021 Software Development I
+ * @instructor Dr. Lisa Macon
+ * GUI for Text analyzer.
+ */
 package com.gce;
 
 import javafx.application.Application;
