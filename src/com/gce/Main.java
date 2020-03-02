@@ -25,6 +25,7 @@ public class Main extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("view/TextAnalyzerUI.fxml"));
             primaryStage.setTitle("Text Analyzer");
             primaryStage.setScene(new Scene(root));
+            primaryStage.setResizable(false);
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
