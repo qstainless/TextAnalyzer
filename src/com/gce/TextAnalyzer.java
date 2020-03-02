@@ -115,23 +115,5 @@ public class TextAnalyzer {
 
         return sortedWordList;
     }
-
-    /**
-     * Displays the word frequencies table on the console
-     *
-     * @param sortedWordList The sortedWordList to display
-     */
-    public static void displayWordRankings(ArrayList<HashMap.Entry<String, Integer>> sortedWordList) {
-        int rank = 0;
-
-        for (HashMap.Entry<String, Integer> temp : sortedWordList) {
-            rank++;
-
-            // Only display the top 20 words
-            if (rank == 20) {
-                break;
-            }
-        }
-    }
 }
 
