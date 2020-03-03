@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+Main view of the TextAnalyzer GUI
+Created using SceneBuilder
+
+The generated .fxml file was edited to remove unused or
+unnecessarily redundand (default) properties
+-->
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
