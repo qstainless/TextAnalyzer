@@ -24,4 +24,30 @@ After the results are displayed, the user can enter another URL for analysis.
 To install the program, simply clone the repo, open it in your favorite IDE, and run it. Make sure that Java JDK 8 and JavaFX 8 are installed in your system. 
 
 ## Known Issues
-None at this time.
+Not all HTML files are created equal. The program's code to convert HTML files to plain text is still rudimentary, as it is unable to identify HTML tag properties in lines without opening or closing tags.
+
+For example, in the following code:
+
+```html
+<div class="Popover anim-scale-in js-tagsearch-popover"
+     hidden
+     data-tagsearch-url="/qstainless/TextAnalyzer/find-symbols"
+     data-tagsearch-ref="master"
+     data-tagsearch-path="README.md"
+     data-tagsearch-lang="Markdown">
+</div>
+```
+
+The following will be considered as 'words' by the program because the lines do not begin with "<" nor end with ">".
+
+```html
+     hidden
+     data-tagsearch-url="/qstainless/TextAnalyzer/find-symbols"
+     data-tagsearch-ref="master"
+     data-tagsearch-path="README.md"
+```
+
+This is because the program parses the target URL line by line. Lines that begin with "<" or end with ">" are ignored for purposes of counting words in them.
+
+## To do
+Refactor the `countWordFrequencies` method to detect lines that begin with "<" and ignore all following lines up to and including the next line with a closing ">". Because the lines will be ignored, there will be no need to call the `htmlToText`. 
