@@ -55,6 +55,8 @@ public class TextAnalyzerUIController implements Initializable {
      */
     @FXML
     private void analyzeUrl(String url) {
+        wordTableView.getItems().clear();
+
         boolean validUrl = validateUrl(url);
 
         if (validUrl) {
