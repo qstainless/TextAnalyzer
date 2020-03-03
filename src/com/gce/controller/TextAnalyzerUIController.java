@@ -73,7 +73,7 @@ public class TextAnalyzerUIController implements Initializable {
                 // Display the word frequencies
                 wordTableView.setItems(getWords(sortedWordList));
             } catch (IOException e) {
-                formValidation.textFieldNotEmpty(null, messageLabel, "An error occured. Unable to analyze content from URL: \"" + targetUrl + "\"");
+                formValidation.textFieldNotEmpty(null, messageLabel, "An error occured. An invalid URL, perhaps?");
             }
         }
     }
