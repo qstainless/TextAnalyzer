@@ -50,4 +50,4 @@ The following will be considered as 'words' by the program because the lines do 
 This is because the program parses the target URL line by line. Lines that begin with "<" or end with ">" are ignored for purposes of counting words in them.
 
 ## To do
-Refactor the `countWordFrequencies` method to detect lines that begin with "<" and ignore all following lines up to and including the next line with a closing ">". Because the lines will be ignored, there will be no need to call the `htmlToText`. 
+Refactor the `countWordFrequencies` method to detect lines that begin with "<" and ignore all following lines up to and including the next line with a closing ">". Because the lines will be ignored, there will be no need to call the `htmlToText` method. 
