@@ -16,7 +16,9 @@ The program was not developed using TDD (Test Driven Development) standards. In 
 The program in its current version is a JavaFX application, using version 8 of Amazon's distribution of the Open Java Development Kit (OpenJDK) [Corretto 8](https://aws.amazon.com/corretto/), which includes JavaFX 8.
 
 ## How to use this program.
-The program requires no user interaction other than compilation and execution. The GUI is made up of a single stage (window) and a sinmgle scene (window content). The scene presents the user with an input field to specify the URL of the file they wish to parse. The results will be displayed in a TableVIew.
+The program requires no user interaction other than compilation and execution. The GUI is made up of a single stage (window) and a single scene (window content). The scene presents the user with an input field to specify the URL of the file they wish to parse. The results will be displayed in a TableVIew.
+
+After the results are displayed, the user can enter another URL for analysis.
 
 ## Installation.
 To install the program, simply clone the repo, open it in your favorite IDE, and run it. Make sure that Java JDK 8 and JavaFX 8 are installed in your system. 
