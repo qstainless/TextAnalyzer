@@ -5,6 +5,7 @@ import com.gce.model.formValidation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URL;
 import java.util.*;
 
@@ -18,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.jsoup.Jsoup;
 
 import static com.gce.TextAnalyzer.*;
 
@@ -63,11 +65,14 @@ public class TextAnalyzerUIController implements Initializable {
             targetUrl = urlTextField.getText();
 
             try {
-                // Fetch the URL content
-                BufferedReader urlContent = fetchUrlContent();
+                // Uses the Jsoup library to fetch the targetUrl and create a clean HTML string thereof
+                String targetHtmlContent = Jsoup.connect(targetUrl).get().html();
+
+                // Buffer the targetHtmlContent String for parsing
+                BufferedReader bufferedHtmlContent = new BufferedReader(new StringReader(targetHtmlContent));
 
                 // Count the word frequencies
-                HashMap<String, Integer> wordFrequencies = countWordFrequencies(urlContent);
+                HashMap<String, Integer> wordFrequencies = countWordFrequencies(bufferedHtmlContent);
 
                 // Sort the words by frequency
                 ArrayList<HashMap.Entry<String, Integer>> sortedWordList = sortWordsByFrequency(wordFrequencies);
