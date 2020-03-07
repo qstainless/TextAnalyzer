@@ -40,7 +40,8 @@ unnecessarily redundand (default) properties
             </font>
         </Button>
         <TextArea layoutY="28.0" prefHeight="82.0" prefWidth="400.0"
-                  text="The program reads the text contents of a URL to display &#10;its word count and frequency, excluding HTML tags. Use &#10;the input field below to provide a URL to parse and then &#10;click the Analyze button.">
+                  text="The program reads the text contents of a URL to display its word count and frequency, excluding HTML tags. Use the input field below to provide a URL to parse and then click the Analyze button."
+                  wrapText="true">
             <font>
                 <Font name="Lucida Sans Regular" size="13.0"/>
             </font>
