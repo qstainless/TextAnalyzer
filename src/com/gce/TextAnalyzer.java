@@ -13,14 +13,29 @@ package com.gce;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class TextAnalyzer {
+    // The target URL to parse
+    public static String targetUrl;
+
     // The total number of words fetched from the targetUrl
     public static int totalNumberOfWords;
+
+    /**
+     * Fetch the URL to parse
+     *
+     * @return The buffered URL content
+     * @throws IOException
+     */
+    public static BufferedReader fetchUrlContent() throws IOException {
+        return new BufferedReader(new InputStreamReader(new URL(targetUrl).openStream()));
+    }
 
     /**
      * Create a hash map to store the words extracted from the URL and their frequency
@@ -71,6 +86,8 @@ public class TextAnalyzer {
                 .toLowerCase()                   // convert to lower case
                 .replaceAll(">'", ">")           // strip leading apostrophe after html tag
                 .replaceAll("<.*?>", "")         // strip html tags
+                .replaceAll("<.*", "")           // hack: strip unclosed html tags
+                .replaceAll(".*?>", "")          // hack: strip unopened html tags
                 .replaceAll(" '", " ")           // strip leading apostrophe after space
                 .replaceAll("[!.,]'", "")           // strip apostrophe after punctuation
                 .replaceAll("[\\[|.?!,;:{}()\\]]", "") // strip punctuation except apostrophe
