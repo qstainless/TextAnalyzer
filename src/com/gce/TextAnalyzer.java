@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class TextAnalyzer {
-    // The target URL to parse
-    public static String targetUrl;
+    // The total number of words fetched from the targetUrl
+    public static int totalNumberOfWords;
 
     /**
      * Create a hash map to store the words extracted from the URL and their frequency
@@ -47,6 +47,7 @@ public class TextAnalyzer {
             // add words and their frequencies to the wordCount HashMap
             while (wordsInLine.hasMoreTokens()) {
                 String word = wordsInLine.nextToken();
+                totalNumberOfWords++;
                 Integer currentWordFrequency = wordCount.get(word);
                 int newWordFrequency = currentWordFrequency == null ? 1 : currentWordFrequency + 1;
                 wordCount.put(word, newWordFrequency);

@@ -1,5 +1,6 @@
 package com.gce.controller;
 
+import com.gce.TextAnalyzer;
 import com.gce.model.Word;
 import com.gce.model.formValidation;
 
@@ -7,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.*;
 
 import javafx.collections.FXCollections;
@@ -110,6 +112,8 @@ public class TextAnalyzerUIController implements Initializable {
     public ObservableList<Word> getWords(ArrayList<HashMap.Entry<String, Integer>> sortedWordList) {
         int rank = 0;
 
+        NumberFormat wordCountFormat = NumberFormat.getInstance();
+
         wordTableView.setEditable(false);
 
         ObservableList<Word> words = FXCollections.observableArrayList();
@@ -120,7 +124,9 @@ public class TextAnalyzerUIController implements Initializable {
             words.add(new Word(rank, temp.getKey(), temp.getValue()));
         }
 
-        messageLabel.setText("After parsing, " + rank + " words were found.");
+        messageLabel.setText("After parsing, " + wordCountFormat.format(rank)
+                + " unique words were found, out of a total of  "
+                + wordCountFormat.format(TextAnalyzer.totalNumberOfWords) + " words.");
 
         return words;
     }
