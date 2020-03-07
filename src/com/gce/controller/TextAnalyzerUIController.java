@@ -59,10 +59,8 @@ public class TextAnalyzerUIController implements Initializable {
     private void analyzeUrl(String url) {
         wordTableView.getItems().clear();
 
-        boolean validUrl = validateUrl(url);
-
-        if (validUrl) {
-            targetUrl = urlTextField.getText();
+        if (validateUrl(url)) {
+            String targetUrl = urlTextField.getText();
 
             try {
                 // Uses the Jsoup library to fetch the targetUrl and create a clean HTML string thereof
