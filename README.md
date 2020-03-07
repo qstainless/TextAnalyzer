@@ -52,11 +52,5 @@ This is because the program parses the target URL line by line. Lines that begin
 ## To do
 Refactor the `countWordFrequencies` method to detect lines that begin with "<" and ignore all following lines up to and including the next line with a closing ">". Because the lines will be ignored, there will be no need to call the `htmlToText`. 
 
-## Screenshots
-![GUI Init](TextAnalyzer-Screenshot-Initial Prompt.png)
-
-![Empty URL](TextAnalyzer-Screenshot-Empty URL.png)
-
-![Invalid URL](TextAnalyzer-Screenshot-Invalid URL.png)
-
+## Screenshot
 ![Results](TextAnalyzer-Screenshot-Results.png)
