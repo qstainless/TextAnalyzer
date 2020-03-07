@@ -54,6 +54,9 @@ Refactor the `countWordFrequencies` method to detect lines that begin with "<" a
 
 ## Screenshots
 ![GUI Init](TextAnalyzer-Screenshot-Initial Prompt.png)
+
 ![Empty URL](TextAnalyzer-Screenshot-Empty URL.png)
+
 ![Invalid URL](TextAnalyzer-Screenshot-Invalid URL.png)
+
 ![Results](TextAnalyzer-Screenshot-Results.png)
