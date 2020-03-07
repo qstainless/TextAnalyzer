@@ -8,39 +8,32 @@ The generated .fxml file was edited to remove unused or
 unnecessarily redundand (default) properties
 -->
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="750.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171"
+<AnchorPane prefHeight="775.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gce.controller.TextAnalyzerUIController">
     <children>
-        <TableView fx:id="wordTableView" layoutY="212.0" prefHeight="541.0" prefWidth="400.0"
-                   AnchorPane.topAnchor="212.0">
+        <TableView fx:id="wordTableView" layoutY="231.0" prefHeight="544.0" prefWidth="400.0"
+                   AnchorPane.topAnchor="231.0">
             <columns>
                 <TableColumn fx:id="wordRank" prefWidth="60.0" resizable="false" text="Rank"/>
                 <TableColumn fx:id="wordContent" prefWidth="233.0" resizable="false" text="Word"/>
                 <TableColumn fx:id="wordFrequency" prefWidth="86.0" resizable="false" text="Frequency"/>
             </columns>
         </TableView>
-        <Label fx:id="urlLabel" layoutX="9.0" layoutY="130.0" prefHeight="27.0" prefWidth="115.0" text="URL to parse:">
+        <Label fx:id="urlLabel" layoutX="9.0" layoutY="117.0" prefHeight="27.0" prefWidth="115.0" text="URL to parse:">
             <font>
                 <Font name="Lucida Sans Regular" size="13.0"/>
             </font>
         </Label>
-        <TextField fx:id="urlTextField" layoutX="103.0" layoutY="130.0" prefHeight="27.0" prefWidth="290.0">
+        <TextField fx:id="urlTextField" layoutX="103.0" layoutY="117.0" prefHeight="27.0" prefWidth="290.0">
             <font>
                 <Font name="Lucida Sans Regular" size="13.0"/>
             </font>
         </TextField>
-        <Button fx:id="analyzeButton" layoutX="9.0" layoutY="168.0" mnemonicParsing="false"
+        <Button fx:id="analyzeButton" layoutX="9.0" layoutY="155.0" mnemonicParsing="false"
                 onAction="#handleAnalyzeButtonAction" text="Analyze!">
             <font>
                 <Font name="Lucida Sans Regular" size="13.0"/>
@@ -52,7 +45,8 @@ unnecessarily redundand (default) properties
                 <Font name="Lucida Sans Regular" size="13.0"/>
             </font>
         </TextArea>
-        <Label fx:id="messageLabel" layoutX="103.0" layoutY="168.0" prefHeight="27.0" prefWidth="290.0">
+        <Label fx:id="messageLabel" alignment="TOP_LEFT" layoutX="103.0" layoutY="155.0" prefHeight="60.0"
+               prefWidth="270.0" wrapText="true">
             <font>
                 <Font name="Lucida Sans Regular" size="13.0"/>
             </font>
