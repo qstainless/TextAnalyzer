@@ -1,11 +1,11 @@
 package com.gce.controller;
 
-import com.gce.TextAnalyzer;
 import com.gce.model.Word;
 import com.gce.model.formValidation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.*;
@@ -21,9 +21,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import static com.gce.TextAnalyzer.*;
-
+/**
+ * This is the main controller for the GUI of the TextAnalyzer application.
+ */
 public class TextAnalyzerUIController implements Initializable {
+
+    // The target URL to parse
+    private static String targetUrl;
+
+    // The total number of words fetched from the targetUrl
+    private static int totalNumberOfWords;
 
     @FXML
     private Label messageLabel;
@@ -51,13 +58,24 @@ public class TextAnalyzerUIController implements Initializable {
     }
 
     /**
+     * Action to perform when the Analyze! button is clicked
+     *
+     * @param actionEvent the action event
+     */
+    @FXML
+    public void handleAnalyzeButtonAction(ActionEvent actionEvent) {
+        analyzeUrl(urlTextField.getText());
+    }
+
+    /**
      * Analyze the URL provided by the user
      *
      * @param url The user submitted URL
      */
     @FXML
-    private void analyzeUrl(String url) {
+    public void analyzeUrl(String url) {
         wordTableView.getItems().clear();
+        wordTableView.setEditable(false);
 
         if (validateUrl(url)) {
             targetUrl = urlTextField.getText();
@@ -73,11 +91,35 @@ public class TextAnalyzerUIController implements Initializable {
                 ArrayList<HashMap.Entry<String, Integer>> sortedWordList = sortWordsByFrequency(wordFrequencies);
 
                 // Display the word frequencies
-                wordTableView.setItems(getWords(sortedWordList));
+                wordTableView.setItems(displayWords(sortedWordList));
             } catch (IOException e) {
-                formValidation.textFieldNotEmpty(null, messageLabel, "An error occured. An invalid URL, perhaps?");
+                formValidation.textFieldNotEmpty(null, messageLabel, "An error occurred. An invalid URL, perhaps?");
             }
         }
+    }
+
+    /**
+     * Displays the word frequencies in the GUI
+     *
+     * @param sortedWordList The sortedWordList to display
+     * @return the observable list
+     */
+    public ObservableList<Word> displayWords(ArrayList<HashMap.Entry<String, Integer>> sortedWordList) {
+        int rank = 0;
+
+        NumberFormat wordCountFormat = NumberFormat.getInstance();
+
+        ObservableList<Word> words = FXCollections.observableArrayList();
+
+        for (HashMap.Entry<String, Integer> temp : sortedWordList) {
+            words.add(new Word(++rank, temp.getKey(), temp.getValue()));
+        }
+
+        messageLabel.setText("After parsing, " + wordCountFormat.format(rank)
+                + " unique words were found, out of a total of "
+                + wordCountFormat.format(totalNumberOfWords) + " words.");
+
+        return words;
     }
 
     /**
@@ -87,42 +129,95 @@ public class TextAnalyzerUIController implements Initializable {
      * @param url The user submitted URL
      * @return boolean True if the URL field is not empty, False otherwise
      */
-    private boolean validateUrl(String url) {
+    public boolean validateUrl(String url) {
         return formValidation.textFieldNotEmpty(url, messageLabel, "The URL cannot be empty.");
     }
 
     /**
-     * Action to perform when the Analyze! button is clicked
+     * Fetch the URL to parse
+     *
+     * @return The buffered URL content
+     * @throws IOException the io exception
      */
-    @FXML
-    public void handleAnalyzeButtonAction(ActionEvent actionEvent) {
-        analyzeUrl(urlTextField.getText());
+    public static BufferedReader fetchUrlContent() throws IOException {
+        return new BufferedReader(new InputStreamReader(new URL(targetUrl).openStream()));
     }
 
     /**
-     * Displays the word frequencies table on the GUI
+     * Create a hash map to store the words extracted from the URL and their frequency
      *
-     * @param sortedWordList The sortedWordList to display
+     * @param urlContent The buffered URL content
+     * @return The wordCount HashMap
+     * @throws IOException the io exception
      */
-    public ObservableList<Word> getWords(ArrayList<HashMap.Entry<String, Integer>> sortedWordList) {
-        int rank = 0;
+    public static HashMap<String, Integer> countWordFrequencies(BufferedReader urlContent) throws IOException {
+        // temp string to store each line of the buffered inputUrl
+        String inputLine;
 
-        NumberFormat wordCountFormat = NumberFormat.getInstance();
+        // HashMap stores words as keys and frequency as values
+        HashMap<String, Integer> wordCount = new HashMap<String, Integer>();
 
-        wordTableView.setEditable(false);
+        // Add words and their frequency to the hash map
+        while ((inputLine = urlContent.readLine()) != null) {
+            // convert the html formatted line to plain text
+            String filteredInputLine = htmlToText(inputLine);
 
-        ObservableList<Word> words = FXCollections.observableArrayList();
+            // extract words from filteredInputLine using StringTokenizer
+            StringTokenizer wordsInLine = new StringTokenizer(filteredInputLine);
 
-        for (HashMap.Entry<String, Integer> temp : sortedWordList) {
-            rank++;
-
-            words.add(new Word(rank, temp.getKey(), temp.getValue()));
+            // add words and their frequencies to the wordCount HashMap
+            while (wordsInLine.hasMoreTokens()) {
+                String word = wordsInLine.nextToken();
+                totalNumberOfWords++;
+                Integer currentWordFrequency = wordCount.get(word);
+                int newWordFrequency = currentWordFrequency == null ? 1 : currentWordFrequency + 1;
+                wordCount.put(word, newWordFrequency);
+            }
         }
 
-        messageLabel.setText("After parsing, " + wordCountFormat.format(rank)
-                + " unique words were found, out of a total of  "
-                + wordCountFormat.format(TextAnalyzer.totalNumberOfWords) + " words.");
+        // close the stream and release system resources.
+        urlContent.close(); // Shout out to Prof. Jeho Park for drilling this into my head!
 
-        return words;
+        return wordCount;
+    }
+
+    /**
+     * Method to sort the wordCount HashMap by frequency values
+     *
+     * @param wordCount The HashMap with words and their frequencies
+     * @return The sortedWordList
+     */
+    public static ArrayList<HashMap.Entry<String, Integer>> sortWordsByFrequency(HashMap<String, Integer> wordCount) {
+        // create and populate an ArrayList with the words in the wordCount HashMap and their frequencies
+        ArrayList<HashMap.Entry<String, Integer>> sortedWordList = new ArrayList<HashMap.Entry<String, Integer>>(wordCount.entrySet());
+
+        // use Comparator to sort the ArrayList
+        sortedWordList.sort(new Comparator<HashMap.Entry<String, Integer>>() {
+            public int compare(HashMap.Entry<String, Integer> freq1, HashMap.Entry<String, Integer> freq2) {
+                return freq2.getValue().compareTo(freq1.getValue());
+            }
+        });
+
+        return sortedWordList;
+    }
+
+    /**
+     * Converts each line of the inputFile from html to plain text
+     *
+     * @param inputLine The string to convert from html to plain text
+     * @return The plain text inputLine
+     */
+    public static String htmlToText(String inputLine) {
+        return inputLine
+                .toLowerCase()                   // convert to lower case
+                .replaceAll(">'", ">")           // strip leading apostrophe after html tag
+                .replaceAll("<.*?>", "")         // strip html tags
+                .replaceAll("<.*", "")           // hack: strip unclosed html tags
+                .replaceAll(".*?>", "")          // hack: strip unopened html tags
+                .replaceAll(" '", " ")           // strip leading apostrophe after space
+                .replaceAll("[!.,]'", "")           // strip apostrophe after punctuation
+                .replaceAll("[\\[|.?!,;:{}()\\]]", "") // strip punctuation except apostrophe
+                .replaceAll("--", " ")           // strip multiple double dashes found in the text
+                .trim();                         // trim any remaining whitespace around each line
     }
 }

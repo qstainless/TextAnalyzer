@@ -1,118 +1,44 @@
-/*
- * @author Guillermo Castaneda Echegaray
- * @version 1.0
- * @course CEN 3024C-27021 Software Development I
- * @instructor Dr. Lisa Macon
- * Text analyzer that reads a file and outputs statistics about that file. It
- * should output the word frequencies of all words in the file, sorted by the
- * most frequently used word. The output displays a set of pairs, each pair
- * containing a word and how many times it occurred in the file.
- */
-
 package com.gce;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.StringTokenizer;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class TextAnalyzer {
-    // The target URL to parse
-    public static String targetUrl;
-
-    // The total number of words fetched from the targetUrl
-    public static int totalNumberOfWords;
+/**
+ * This TextAnalyzer program implements an application that reads a file from
+ * a given URL and outputs statistics about the words found in that file. It
+ * outputs the total number of words found in the file and the frequencies of
+ * unique words, sorted by the most frequently used word in descending order.
+ *
+ * @author Guillermo Castaneda Echegaray
+ * @version 1.7
+ * @course CEN 3024C-27021 Software Development I
+ * @instructor Dr. Lisa Macon
+ * @since 2020-01-11
+ */
+public class TextAnalyzer extends Application {
 
     /**
-     * Fetch the URL to parse
+     * The entry point of application.
      *
-     * @return The buffered URL content
-     * @throws IOException
+     * @param args the input arguments
      */
-    public static BufferedReader fetchUrlContent() throws IOException {
-        return new BufferedReader(new InputStreamReader(new URL(targetUrl).openStream()));
+    public static void main(String[] args) {
+        launch(args);
     }
 
-    /**
-     * Create a hash map to store the words extracted from the URL and their frequency
-     *
-     * @param urlContent The buffered URL content
-     * @return The wordCount HashMap
-     * @throws IOException
-     */
-    public static HashMap<String, Integer> countWordFrequencies(BufferedReader urlContent) throws IOException {
-        // temp string to store each line of the buffered inputUrl
-        String inputLine;
-
-        // HashMap stores words as keys and frequency as values
-        HashMap<String, Integer> wordCount = new HashMap<String, Integer>();
-
-        // Add words and their frequency to the hash map
-        while ((inputLine = urlContent.readLine()) != null) {
-            // convert the html formatted line to plain text
-            String filteredInputLine = htmlToText(inputLine);
-
-            // extract words from filteredInputLine using StringTokenizer
-            StringTokenizer wordsInLine = new StringTokenizer(filteredInputLine);
-
-            // add words and their frequencies to the wordCount HashMap
-            while (wordsInLine.hasMoreTokens()) {
-                String word = wordsInLine.nextToken();
-                totalNumberOfWords++;
-                Integer currentWordFrequency = wordCount.get(word);
-                int newWordFrequency = currentWordFrequency == null ? 1 : currentWordFrequency + 1;
-                wordCount.put(word, newWordFrequency);
-            }
+    @Override
+    public void start(Stage primaryStage) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("view/TextAnalyzerUI.fxml"));
+            primaryStage.setTitle("Text Analyzer");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        // close the stream and release system resources.
-        urlContent.close(); // Shout out to Prof. Jeho Park for drilling this into my head!
-
-        return wordCount;
-    }
-
-    /**
-     * Converts each line of the inputFile from html to plain text
-     *
-     * @param inputLine The string to convert from html to plain text
-     * @return The plain text inputLine
-     */
-    private static String htmlToText(String inputLine) {
-        return inputLine
-                .toLowerCase()                   // convert to lower case
-                .replaceAll(">'", ">")           // strip leading apostrophe after html tag
-                .replaceAll("<.*?>", "")         // strip html tags
-                .replaceAll("<.*", "")           // hack: strip unclosed html tags
-                .replaceAll(".*?>", "")          // hack: strip unopened html tags
-                .replaceAll(" '", " ")           // strip leading apostrophe after space
-                .replaceAll("[!.,]'", "")           // strip apostrophe after punctuation
-                .replaceAll("[\\[|.?!,;:{}()\\]]", "") // strip punctuation except apostrophe
-                .replaceAll("--", " ")           // strip multiple double dashes found in the text
-                .trim();                         // trim any remaining whitespace around each line
-    }
-
-    /**
-     * Method to sort the wordCount HashMap by frequency values
-     *
-     * @param wordCount The HashMap with words and their frequencies
-     * @return The sortedWordList
-     */
-    public static ArrayList<HashMap.Entry<String, Integer>> sortWordsByFrequency(HashMap<String, Integer> wordCount) {
-        // create and populate an ArrayList with the words in the wordCount HashMap and their frequencies
-        ArrayList<HashMap.Entry<String, Integer>> sortedWordList = new ArrayList<HashMap.Entry<String, Integer>>(wordCount.entrySet());
-
-        // use Comparator to sort the ArrayList
-        sortedWordList.sort(new Comparator<HashMap.Entry<String, Integer>>() {
-            public int compare(HashMap.Entry<String, Integer> freq1, HashMap.Entry<String, Integer> freq2) {
-                return freq2.getValue().compareTo(freq1.getValue());
-            }
-        });
-
-        return sortedWordList;
     }
 }
-
