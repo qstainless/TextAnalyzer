@@ -12,10 +12,11 @@ import javafx.stage.Stage;
  * outputs the total number of words found in the file and the frequencies of
  * unique words, sorted by the most frequently used word in descending order.
  *
+ * Course:     CEN 3024C-27021 Software Development I
+ * Instructor: Dr. Lisa Macon
+ *
  * @author Guillermo Castaneda Echegaray
  * @version 1.7
- * @course CEN 3024C-27021 Software Development I
- * @instructor Dr. Lisa Macon
  * @since 2020-01-11
  */
 public class TextAnalyzer extends Application {
