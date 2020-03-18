@@ -82,7 +82,7 @@ public class TextAnalyzerUIController implements Initializable {
 
             try {
                 // Fetch the URL content
-                BufferedReader targetHtmlContent = fetchUrlContent();
+                BufferedReader targetHtmlContent = fetchUrlContent(targetUrl);
 
                 // Count the word frequencies
                 HashMap<String, Integer> wordFrequencies = countWordFrequencies(targetHtmlContent);
@@ -139,7 +139,7 @@ public class TextAnalyzerUIController implements Initializable {
      * @return The buffered URL content
      * @throws IOException the io exception
      */
-    public static BufferedReader fetchUrlContent() throws IOException {
+    public static BufferedReader fetchUrlContent(String targetUrl) throws IOException {
         return new BufferedReader(new InputStreamReader(new URL(targetUrl).openStream()));
     }
 
@@ -189,14 +189,10 @@ public class TextAnalyzerUIController implements Initializable {
      */
     public static ArrayList<HashMap.Entry<String, Integer>> sortWordsByFrequency(HashMap<String, Integer> wordCount) {
         // create and populate an ArrayList with the words in the wordCount HashMap and their frequencies
-        ArrayList<HashMap.Entry<String, Integer>> sortedWordList = new ArrayList<HashMap.Entry<String, Integer>>(wordCount.entrySet());
+        ArrayList<HashMap.Entry<String, Integer>> sortedWordList = new ArrayList<>(wordCount.entrySet());
 
         // use Comparator to sort the ArrayList
-        sortedWordList.sort(new Comparator<HashMap.Entry<String, Integer>>() {
-            public int compare(HashMap.Entry<String, Integer> freq1, HashMap.Entry<String, Integer> freq2) {
-                return freq2.getValue().compareTo(freq1.getValue());
-            }
-        });
+        sortedWordList.sort((freq1, freq2) -> freq2.getValue().compareTo(freq1.getValue()));
 
         return sortedWordList;
     }
