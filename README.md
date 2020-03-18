@@ -15,7 +15,7 @@ The program was not originally developed using TDD (Test Driven Development) sta
 The current version (1.7) of the program now includes unit tests created using Junit.
 
 ## System requirements
-The program in its current version is a JavaFX application, using version 8 of Amazon's distribution of the Open Java Development Kit (OpenJDK) [Corretto 8](https://aws.amazon.com/corretto/), which includes JavaFX 8. Unit tests were performed using [Junit 5](https://github.com/junit-team/junit5/).
+The program in its current version is a JavaFX application, using version 8 of Amazon's distribution of the Open Java Development Kit (OpenJDK) [Corretto 8](https://aws.amazon.com/corretto/), which includes JavaFX 8. Unit tests were created using [Junit 5](https://github.com/junit-team/junit5/).
 
 ## How to use this program.
 The program requires no user interaction other than compilation and execution. The GUI is made up of a single stage (window) and a single scene (window content). The scene presents the user with an input field to specify the URL of the file they wish to parse. The results will be displayed in a TableVIew.
