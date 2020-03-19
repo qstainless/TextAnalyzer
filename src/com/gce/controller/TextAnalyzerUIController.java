@@ -102,9 +102,8 @@ public class TextAnalyzerUIController implements Initializable {
      * Displays the word frequencies in the GUI
      *
      * @param sortedWordList The sortedWordList to display
-     * @return the observable list
      */
-    public ObservableList<Word> displayWords(ArrayList<HashMap.Entry<String, Integer>> sortedWordList) {
+    public void displaySortedWords(ArrayList<HashMap.Entry<String, Integer>> sortedWordList) {
         int rank = 0;
 
         NumberFormat wordCountFormat = NumberFormat.getInstance();
@@ -119,7 +118,7 @@ public class TextAnalyzerUIController implements Initializable {
                 + " unique words were found, out of a total of "
                 + wordCountFormat.format(totalNumberOfWords) + " words.");
 
-        return words;
+        wordTableView.setItems(words);
     }
 
     /**
