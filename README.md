@@ -66,6 +66,6 @@ Refactor the `countWordFrequencies` method to detect lines that begin with "<" a
 
 ## Unit Tests
 ### formValidation Class
-![formValidation Class Unit Tests](TextAnalyzer-Screenshot-formValidation-Tests.png)
+![formValidation Class Unit Tests](TextAnalyzer-Screenshot-Tests-formValidation.png)
 ### TextAnalyzerUIController Class
-![TextAnalyzerUIController Class Unit Tests](TextAnalyzer-Screenshot-TextAnalyzerUIController-Tests.png)
+![TextAnalyzerUIController Class Unit Tests](TextAnalyzer-Screenshot-Tests-TextAnalyzerUIController.png)
