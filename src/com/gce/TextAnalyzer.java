@@ -11,8 +11,8 @@ import javafx.stage.Stage;
  * a given URL and outputs statistics about the words found in that file. It
  * outputs the total number of words found in the file and the frequencies of
  * unique words, sorted by the most frequently used word in descending order.
- *
- * Course:     CEN 3024C-27021 Software Development I
+ * <p>
+ * Course: CEN 3024C-27021 Software Development I
  * Instructor: Dr. Lisa Macon
  *
  * @author Guillermo Castaneda Echegaray
@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 public class TextAnalyzer extends Application {
 
     /**
-     * The entry point of application.
+     * Entry point of the {@code TextAnalyzer} application.
      *
      * @param args the input arguments
      */

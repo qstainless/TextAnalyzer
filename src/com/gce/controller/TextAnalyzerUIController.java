@@ -49,7 +49,19 @@ public class TextAnalyzerUIController implements Initializable {
     @FXML
     private TableColumn<Word, Integer> wordFrequency;
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    /**
+     * Called by the {@code FXMLLoader} to initialize the controller after its root
+     * element has been completely processed. Defines the properties of the
+     * column names in the {@link TableView} where the programs results
+     * will be displayed.
+     *
+     * @param location  The location used to resolve relative paths for the
+     *                  root object, or <tt>null</tt> if the location is
+     *                  not known.
+     * @param resources The resources used to localize the root object, or
+     *                  <tt>null</tt> if the root object was not localized.
+     */
+    @FXML
     public void initialize(URL location, ResourceBundle resources) {
         wordRank.setCellValueFactory(new PropertyValueFactory<Word, Integer>("wordRank"));
         wordContent.setCellValueFactory(new PropertyValueFactory<Word, String>("wordContent"));
@@ -59,7 +71,7 @@ public class TextAnalyzerUIController implements Initializable {
     /**
      * Action to perform when the Analyze! button is clicked
      *
-     * @param actionEvent the action event
+     * @param actionEvent The action event, which in this case is clicking the Analyze! button in the GUI.
      */
     @FXML
     public void handleAnalyzeButtonAction(ActionEvent actionEvent) {
@@ -67,9 +79,26 @@ public class TextAnalyzerUIController implements Initializable {
     }
 
     /**
-     * Analyze the URL provided by the user
+     * Takes the URL provided in the {@code targetUrl} texfield and processes it
+     * for analysis, as follows:
+     * <ol>
+     *     <li>First, it attempts to fetch the content from the URL by
+     *     calling the {@link TextAnalyzerUIController#fetchUrlContent}
+     *     method. If the URL is empty or invalid (not found/malformed
+     *     URL), the program will display an error message.</li>
+     *     <li>Next, the program will call the
+     *     {@link TextAnalyzerUIController#countWordFrequencies} method
+     *     to count the frequency of words after stripping away all HTML
+     *     tags and some punctuation. The unique words and their
+     *     frequencies will be added to a HashMap.</li>
+     *     <li>The program will then create an ArrayList from the HashMap
+     *     to sort the words by frequency in descending order by calling
+     *     {@link TextAnalyzerUIController#sortWordsByFrequency}.</li>
+     *     <li>Finally, the program will populate the {@code wordTableView}
+     *     in the GUI with the results.</li>
+     * </ol>
      *
-     * @param url The user submitted URL
+     * @param url The URL submitted by the user
      */
     @FXML
     public void analyzeUrl(String url) {
@@ -84,14 +113,14 @@ public class TextAnalyzerUIController implements Initializable {
                 // Fetch the URL content
                 BufferedReader targetHtmlContent = fetchUrlContent(targetUrl);
 
-                // Count the word frequencies
+                // Create a HashMap with the extracted words and their frequencies
                 HashMap<String, Integer> wordFrequencies = countWordFrequencies(targetHtmlContent);
 
-                // Sort the words by frequency
+                // Create an ArrayList with the extracted words sorted by frequency in descending order
                 ArrayList<HashMap.Entry<String, Integer>> sortedWordList = sortWordsByFrequency(wordFrequencies);
 
-                // Display the word frequencies
-                wordTableView.setItems(displayWords(sortedWordList));
+                // Populate the wordTableView in the GUI with the results
+                displaySortedWords(sortedWordList);
             } catch (IOException e) {
                 formValidation.textFieldNotEmpty(null, messageLabel, "An error occurred. An invalid URL, perhaps?");
             }
@@ -99,7 +128,10 @@ public class TextAnalyzerUIController implements Initializable {
     }
 
     /**
-     * Displays the word frequencies in the GUI
+     * Parses through the {@code sortedWordList} and populates the
+     * {@code TableView} with the words sorted by frequency in descending
+     * order. Displays the total number of words and number of unique words
+     * found in the source URL.
      *
      * @param sortedWordList The sortedWordList to display
      */
@@ -122,35 +154,37 @@ public class TextAnalyzerUIController implements Initializable {
     }
 
     /**
-     * Simple validation to make sure that the URL field is not empty.
-     * Does not check for valid URLs
+     * Calls the {@link formValidation} class methods to check whether
+     * or not the URL fiels is empty.
      *
-     * @param url The user submitted URL
-     * @return boolean True if the URL field is not empty, False otherwise
+     * @param url The URL submitted by the user
+     * @return True if the URL field is not empty
      */
     public boolean validateUrl(String url) {
         return formValidation.textFieldNotEmpty(url, messageLabel, "The URL cannot be empty.");
     }
 
     /**
-     * Fetch the URL to parse
+     * Attempts to fetch the URL provided by the user in the GUI.
      *
+     * @param targetUrl the target url
      * @return The buffered URL content
-     * @throws IOException the io exception
+     * @throws IOException the IO Exception
      */
     public static BufferedReader fetchUrlContent(String targetUrl) throws IOException {
         return new BufferedReader(new InputStreamReader(new URL(targetUrl).openStream()));
     }
 
     /**
-     * Create a hash map to store the words extracted from the URL and their frequency
+     * Creates a {@code HashMap} to store the words extracted from the URL and their
+     * frequencies.
      *
      * @param urlContent The buffered URL content
-     * @return The wordCount HashMap
-     * @throws IOException the io exception
+     * @return The HashMap with words and their frequencies as keys and value, respectively
+     * @throws IOException the IO Exception
      */
     public static HashMap<String, Integer> countWordFrequencies(BufferedReader urlContent) throws IOException {
-        // temp string to store each line of the buffered inputUrl
+        // Temporary string to store each line of the buffered inputUrl
         String inputLine;
 
         // HashMap stores words as keys and frequency as values
@@ -174,45 +208,47 @@ public class TextAnalyzerUIController implements Initializable {
             }
         }
 
-        // close the stream and release system resources.
-        urlContent.close(); // Shout out to Prof. Jeho Park for drilling this into my head!
+        urlContent.close();
 
         return wordCount;
     }
 
     /**
-     * Method to sort the wordCount HashMap by frequency values
+     * Creates an {@code ArrayList} that will contain the sorted {@code wordCount HashMap}
+     * keys by values in descending order. Uses {@code Comparator} to sort the {@code ArrayList}
      *
      * @param wordCount The HashMap with words and their frequencies
-     * @return The sortedWordList
+     * @return The sortedWordList ArrayList
      */
     public static ArrayList<HashMap.Entry<String, Integer>> sortWordsByFrequency(HashMap<String, Integer> wordCount) {
         // create and populate an ArrayList with the words in the wordCount HashMap and their frequencies
         ArrayList<HashMap.Entry<String, Integer>> sortedWordList = new ArrayList<>(wordCount.entrySet());
 
-        // use Comparator to sort the ArrayList
+        // Sort the ArrayList
         sortedWordList.sort((freq1, freq2) -> freq2.getValue().compareTo(freq1.getValue()));
 
         return sortedWordList;
     }
 
     /**
-     * Converts each line of the inputFile from html to plain text
+     * Converts each {@code inputLine} of the {@code inputFile} from HTML to
+     * plain text by stripping select characters and strings using regular
+     * expressions.
      *
-     * @param inputLine The string to convert from html to plain text
-     * @return The plain text inputLine
+     * @param inputLine The string to convert from html to plain text.
+     * @return A plain text version of the {@code inputLine}
      */
     public static String htmlToText(String inputLine) {
         return inputLine
-                .toLowerCase()                   // convert to lower case
-                .replaceAll(">'", ">")           // strip leading apostrophe after html tag
-                .replaceAll("<.*?>", "")         // strip html tags
-                .replaceAll("<.*", "")           // hack: strip unclosed html tags
-                .replaceAll(".*?>", "")          // hack: strip unopened html tags
-                .replaceAll(" '", " ")           // strip leading apostrophe after space
-                .replaceAll("[!.,]'", "")           // strip apostrophe after punctuation
-                .replaceAll("[\\[|.?!,;:{}()\\]]", "") // strip punctuation except apostrophe
-                .replaceAll("--", " ")           // strip multiple double dashes found in the text
-                .trim();                         // trim any remaining whitespace around each line
+                .toLowerCase()
+                .replaceAll(">'", ">")
+                .replaceAll("<.*?>", "")
+                .replaceAll("<.*", "")  // hack to strip unclosed html tags
+                .replaceAll(".*?>", "") // hack to strip unopened html tags
+                .replaceAll(" '", " ")
+                .replaceAll("[!.,]'", "")
+                .replaceAll("[\\[|.?!,;:{}()\\]]", "")
+                .replaceAll("--", " ")
+                .trim();
     }
 }

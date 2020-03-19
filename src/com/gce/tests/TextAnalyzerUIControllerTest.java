@@ -18,7 +18,7 @@ class TextAnalyzerUIControllerTest {
     static String validUrl = "http://shakespeare.mit.edu/macbeth/full.html";
 
     /**
-     * Checks if the URL input by the user is malformed (the URL
+     * Test to determine if the supplied URL is malformed (the URL
      * cannot be parsed)
      */
     @Test
@@ -32,7 +32,7 @@ class TextAnalyzerUIControllerTest {
     }
 
     /**
-     * Checks if the URL is valid (exists) or not (Not Fount)
+     * Test to determine if the supplied URL is valid (exists) or not (Not Fount)
      */
     @Test
     @Order(2)
@@ -45,7 +45,7 @@ class TextAnalyzerUIControllerTest {
     }
 
     /**
-     * Checks if the fetched URL is not null (the URL exists).
+     * Test to determine that the fetched URL is not null (the URL exists).
      *
      * @throws IOException The IOException
      */
