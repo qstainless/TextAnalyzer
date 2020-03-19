@@ -85,7 +85,7 @@ class TextAnalyzerUIControllerTest {
      */
     @Test
     @DisplayName("The ArrayList should contain the properly sorted list of words.")
-    void testSortWordsByFrequency() throws IOException {
+    void testSortWordsByFrequency() {
 
         // Create the expected values from the sample content:
         // "<p>This is a sample HTML line. It is what it is.</p>"
