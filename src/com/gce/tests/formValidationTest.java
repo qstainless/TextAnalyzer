@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class formValidationTest {
     static String nullUrl = null;
     static String notEmptyUrl = "http://somewhere.com/file_to_read.html";
@@ -14,7 +15,8 @@ class formValidationTest {
      * Checks if the URL text field is empty
      */
     @Test
-    @DisplayName("An empty URL was given.")
+    @Order(1)
+    @DisplayName("The URL field is empty.")
     void testEmptyUrl() {
         boolean actualResult = formValidation.textFieldNotEmpty(nullUrl);
 
@@ -27,7 +29,8 @@ class formValidationTest {
      * regardless of whether or not the URL is invalid
      */
     @Test
-    @DisplayName("The URL field is not empty (not null).")
+    @Order(2)
+    @DisplayName("The URL field is not empty.")
     void testNotEmptyUrl() {
         boolean actualResult = formValidation.textFieldNotEmpty(notEmptyUrl);
 

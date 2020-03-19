@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TextAnalyzerUIControllerTest {
 
     static String malformedUrl = "fvsdfjkbweiqug";
@@ -21,6 +22,7 @@ class TextAnalyzerUIControllerTest {
      * cannot be parsed)
      */
     @Test
+    @Order(1)
     @DisplayName("A malformed URL was given. Should throw a MalformedURLException.")
     void testAMalformedUrl() {
         assertThrows(MalformedURLException.class, () -> {
@@ -33,6 +35,7 @@ class TextAnalyzerUIControllerTest {
      * Checks if the URL is valid (exists) or not (Not Fount)
      */
     @Test
+    @Order(2)
     @DisplayName("An invalid URL was given. Should throw a FileNotFoundException.")
     void testAnInvalidUrl() {
         assertThrows(FileNotFoundException.class, () -> {
@@ -47,6 +50,7 @@ class TextAnalyzerUIControllerTest {
      * @throws IOException The IOException
      */
     @Test
+    @Order(3)
     @DisplayName("A valid URL was given. Should not throw an IOException.")
     void testAValidUrl() throws IOException {
         assertNotNull(TextAnalyzerUIController.fetchUrlContent(validUrl));
@@ -58,6 +62,7 @@ class TextAnalyzerUIControllerTest {
      * @throws IOException The IOException
      */
     @Test
+    @Order(4)
     @DisplayName("The resulting HashMap should contain the correct keys and values.")
     void testCountWordFrequencies() throws IOException {
         String sampleContent = "<p>This is a sample HTML line. It is what it is.</p>";
@@ -84,6 +89,7 @@ class TextAnalyzerUIControllerTest {
      * Tests for sorting of the key/value pairs in the HashMap
      */
     @Test
+    @Order(5)
     @DisplayName("The ArrayList should contain the properly sorted list of words.")
     void testSortWordsByFrequency() {
 
