@@ -28,9 +28,6 @@ import java.util.StringTokenizer;
  */
 public class TextAnalyzerUIController implements Initializable {
 
-    // The target URL to parse
-    private static String targetUrl;
-
     // The total number of words fetched from the targetUrl
     private static int totalNumberOfWords;
 
@@ -80,7 +77,8 @@ public class TextAnalyzerUIController implements Initializable {
         wordTableView.setEditable(false);
 
         if (validateUrl(url)) {
-            targetUrl = urlTextField.getText();
+            // The target URL to parse
+            String targetUrl = urlTextField.getText();
 
             try {
                 // Fetch the URL content
