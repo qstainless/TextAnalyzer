@@ -1,10 +1,10 @@
 package com.gce.tests;
 
 import com.gce.model.formValidation;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class formValidationTest {
     static String nullUrl = null;

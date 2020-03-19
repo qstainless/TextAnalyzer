@@ -9,9 +9,8 @@ unnecessarily redundand (default) properties
 -->
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
-
 <AnchorPane prefHeight="775.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gce.controller.TextAnalyzerUIController">
     <children>
