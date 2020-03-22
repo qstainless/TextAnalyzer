@@ -25,9 +25,7 @@ class TextAnalyzerUIControllerTest {
     @Order(1)
     @DisplayName("A malformed URL was given. Should throw a MalformedURLException.")
     void testAMalformedUrl() {
-        assertThrows(MalformedURLException.class, () -> {
-                    TextAnalyzerUIController.fetchUrlContent(malformedUrl);
-                }
+        assertThrows(MalformedURLException.class, () -> TextAnalyzerUIController.fetchUrlContent(malformedUrl)
         );
     }
 
@@ -38,9 +36,7 @@ class TextAnalyzerUIControllerTest {
     @Order(2)
     @DisplayName("An invalid URL was given. Should throw a FileNotFoundException.")
     void testAnInvalidUrl() {
-        assertThrows(FileNotFoundException.class, () -> {
-                    TextAnalyzerUIController.fetchUrlContent(invalidUrl);
-                }
+        assertThrows(FileNotFoundException.class, () -> TextAnalyzerUIController.fetchUrlContent(invalidUrl)
         );
     }
 
