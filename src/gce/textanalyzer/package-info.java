@@ -1,4 +1,4 @@
 /**
- * The com.gce package is where Guillermo Castaneda Echegaray stores his projects.
+ * Guillermo Castaneda Echegaray's TextAnalyzer project.
  */
 package gce.textanalyzer;
