@@ -13,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TextAnalyzerUIControllerTest {
 
-    static String malformedUrl = "a malformed url";
-    static String invalidUrl = "http://shakespeare.mit.edu/macbeth/fulls.html";
-    static String validUrl = "http://shakespeare.mit.edu/macbeth/full.html";
+    static final String malformedUrl = "a malformed url";
+    static final String invalidUrl = "http://shakespeare.mit.edu/macbeth/fulls.html";
+    static final String validUrl = "http://shakespeare.mit.edu/macbeth/full.html";
 
     /**
      * Test to determine if the supplied URL is malformed (the URL

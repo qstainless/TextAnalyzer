@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class formValidationTest {
-    static String nullUrl = null;
-    static String notEmptyUrl = "http://somewhere.com/file_to_read.html";
+    static final String nullUrl = null;
+    static final String notEmptyUrl = "http://somewhere.com/file_to_read.html";
 
     /**
      * Checks if the URL text field is empty
