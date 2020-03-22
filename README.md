@@ -54,6 +54,18 @@ This is because the program parses the target URL line by line. Lines that begin
 ## To do
 Refactor the `countWordFrequencies` method to detect lines that begin with "<" and ignore all following lines up to and including the next line with a closing ">". Because the lines will be ignored, there will be no need to call the `htmlToText`. 
 
+## Version history
+The version numbering of this project does not follow most version numbering guidelines. Rather, it is limited to a two-token concept: 
+
+```(major).(course module)``` 
+
+```
+Version 1.9 (current) - Added JavaDocs
+Version 1.7 - Added unit tests using JUnit
+Version 1.6 - Aded GUI functionality
+Version 1.2 - First version
+```
+
 ## Screenshots
 ### Initial prompt
 ![Initial Prompt](TextAnalyzer-Screenshot-Initial-Prompt.png)
