@@ -1,10 +1,9 @@
-package com.gce.controller;
+package gce.textanalyzer.controller;
 
-import com.gce.model.Word;
-import com.gce.model.formValidation;
+import gce.textanalyzer.model.Word;
+import gce.textanalyzer.model.formValidation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -63,23 +62,22 @@ public class TextAnalyzerUIController implements Initializable {
      */
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
-        wordRank.setCellValueFactory(new PropertyValueFactory<Word, Integer>("wordRank"));
-        wordContent.setCellValueFactory(new PropertyValueFactory<Word, String>("wordContent"));
-        wordFrequency.setCellValueFactory(new PropertyValueFactory<Word, Integer>("wordFrequency"));
+        wordRank.setCellValueFactory(new PropertyValueFactory<>("wordRank"));
+        wordContent.setCellValueFactory(new PropertyValueFactory<>("wordContent"));
+        wordFrequency.setCellValueFactory(new PropertyValueFactory<>("wordFrequency"));
     }
 
     /**
      * Action to perform when the Analyze! button is clicked
      *
-     * @param actionEvent The action event, which in this case is clicking the Analyze! button in the GUI.
      */
     @FXML
-    public void handleAnalyzeButtonAction(ActionEvent actionEvent) {
+    public void handleAnalyzeButtonAction() {
         analyzeUrl(urlTextField.getText());
     }
 
     /**
-     * Takes the URL provided in the {@code targetUrl} texfield and processes it
+     * Takes the URL provided in the {@code targetUrl} textfield and processes it
      * for analysis, as follows:
      * <ol>
      *     <li>First, it attempts to fetch the content from the URL by
@@ -155,7 +153,7 @@ public class TextAnalyzerUIController implements Initializable {
 
     /**
      * Calls the {@link formValidation} class methods to check whether
-     * or not the URL fiels is empty.
+     * or not the URL fields is empty.
      *
      * @param url The URL submitted by the user
      * @return True if the URL field is not empty
@@ -188,7 +186,7 @@ public class TextAnalyzerUIController implements Initializable {
         String inputLine;
 
         // HashMap stores words as keys and frequency as values
-        HashMap<String, Integer> wordCount = new HashMap<String, Integer>();
+        HashMap<String, Integer> wordCount = new HashMap<>();
 
         // Add words and their frequency to the hash map
         while ((inputLine = urlContent.readLine()) != null) {

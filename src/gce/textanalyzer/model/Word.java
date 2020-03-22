@@ -1,4 +1,4 @@
-package com.gce.model;
+package gce.textanalyzer.model;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 /**
  * Word model used to populate the {@code TableView} with the text analysis results.
  */
+@SuppressWarnings("unused")
 public class Word {
     private final SimpleIntegerProperty wordRankProperty;
     private final SimpleStringProperty wordContentProperty;

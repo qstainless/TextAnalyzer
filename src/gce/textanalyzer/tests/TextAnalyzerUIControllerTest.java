@@ -1,6 +1,6 @@
-package com.gce.tests;
+package gce.textanalyzer.tests;
 
-import com.gce.controller.TextAnalyzerUIController;
+import gce.textanalyzer.controller.TextAnalyzerUIController;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
@@ -13,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TextAnalyzerUIControllerTest {
 
-    static String malformedUrl = "fvsdfjkbweiqug";
-    static String invalidUrl = "http://shakespeare.mit.edu/macbeth/fulls.html";
-    static String validUrl = "http://shakespeare.mit.edu/macbeth/full.html";
+    static final String malformedUrl = "a malformed url";
+    static final String invalidUrl = "http://shakespeare.mit.edu/macbeth/fulls.html";
+    static final String validUrl = "http://shakespeare.mit.edu/macbeth/full.html";
 
     /**
      * Test to determine if the supplied URL is malformed (the URL
@@ -25,9 +25,7 @@ class TextAnalyzerUIControllerTest {
     @Order(1)
     @DisplayName("A malformed URL was given. Should throw a MalformedURLException.")
     void testAMalformedUrl() {
-        assertThrows(MalformedURLException.class, () -> {
-                    TextAnalyzerUIController.fetchUrlContent(malformedUrl);
-                }
+        assertThrows(MalformedURLException.class, () -> TextAnalyzerUIController.fetchUrlContent(malformedUrl)
         );
     }
 
@@ -38,9 +36,7 @@ class TextAnalyzerUIControllerTest {
     @Order(2)
     @DisplayName("An invalid URL was given. Should throw a FileNotFoundException.")
     void testAnInvalidUrl() {
-        assertThrows(FileNotFoundException.class, () -> {
-                    TextAnalyzerUIController.fetchUrlContent(invalidUrl);
-                }
+        assertThrows(FileNotFoundException.class, () -> TextAnalyzerUIController.fetchUrlContent(invalidUrl)
         );
     }
 
@@ -95,15 +91,15 @@ class TextAnalyzerUIControllerTest {
 
         // Create the expected values from the sample content:
         // "<p>This is a sample HTML line. It is what it is.</p>"
-        ArrayList<Integer> arraylist = new ArrayList<>();
-        arraylist.add(3);
-        arraylist.add(2);
-        arraylist.add(1);
-        arraylist.add(1);
-        arraylist.add(1);
-        arraylist.add(1);
-        arraylist.add(1);
-        arraylist.add(1);
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(3);
+        arrayList.add(2);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
 
         HashMap<String, Integer> testWords = new HashMap<>();
         testWords.put("is", 3);
@@ -120,7 +116,7 @@ class TextAnalyzerUIControllerTest {
         int count = 0;
 
         for (HashMap.Entry<String, Integer> words : sortedList) {
-            assertEquals(arraylist.get(count), words.getValue());
+            assertEquals(arrayList.get(count), words.getValue());
             count++;
         }
     }
