@@ -63,9 +63,9 @@ public class TextAnalyzerUIController implements Initializable {
      */
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
-        wordRank.setCellValueFactory(new PropertyValueFactory<Word, Integer>("wordRank"));
-        wordContent.setCellValueFactory(new PropertyValueFactory<Word, String>("wordContent"));
-        wordFrequency.setCellValueFactory(new PropertyValueFactory<Word, Integer>("wordFrequency"));
+        wordRank.setCellValueFactory(new PropertyValueFactory<>("wordRank"));
+        wordContent.setCellValueFactory(new PropertyValueFactory<>("wordContent"));
+        wordFrequency.setCellValueFactory(new PropertyValueFactory<>("wordFrequency"));
     }
 
     /**
@@ -188,7 +188,7 @@ public class TextAnalyzerUIController implements Initializable {
         String inputLine;
 
         // HashMap stores words as keys and frequency as values
-        HashMap<String, Integer> wordCount = new HashMap<String, Integer>();
+        HashMap<String, Integer> wordCount = new HashMap<>();
 
         // Add words and their frequency to the hash map
         while ((inputLine = urlContent.readLine()) != null) {
