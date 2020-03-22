@@ -21,7 +21,7 @@ unnecessarily redundant (default) properties
             <TableColumn fx:id="wordFrequency" prefWidth="86.0" resizable="false" text="Frequency"/>
         </columns>
     </TableView>
-    <Label fx:id="urlLabel" layoutX="9.0" layoutY="117.0" prefHeight="27.0" prefWidth="115.0" text="URL to parse:">
+    <Label layoutX="9.0" layoutY="117.0" prefHeight="27.0" prefWidth="115.0" text="URL to parse:">
         <font>
             <Font name="Lucida Sans Regular" size="13.0"/>
         </font>
@@ -31,7 +31,7 @@ unnecessarily redundant (default) properties
             <Font name="Lucida Sans Regular" size="13.0"/>
         </font>
     </TextField>
-    <Button fx:id="analyzeButton" layoutX="9.0" layoutY="155.0" mnemonicParsing="false"
+    <Button layoutX="9.0" layoutY="155.0" mnemonicParsing="false"
             onAction="#handleAnalyzeButtonAction" text="Analyze!">
         <font>
             <Font name="Lucida Sans Regular" size="13.0"/>
