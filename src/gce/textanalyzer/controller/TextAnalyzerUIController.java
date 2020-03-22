@@ -4,7 +4,6 @@ import gce.textanalyzer.model.Word;
 import gce.textanalyzer.model.formValidation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -71,10 +70,9 @@ public class TextAnalyzerUIController implements Initializable {
     /**
      * Action to perform when the Analyze! button is clicked
      *
-     * @param actionEvent The action event, which in this case is clicking the Analyze! button in the GUI.
      */
     @FXML
-    public void handleAnalyzeButtonAction(ActionEvent actionEvent) {
+    public void handleAnalyzeButtonAction() {
         analyzeUrl(urlTextField.getText());
     }
 
