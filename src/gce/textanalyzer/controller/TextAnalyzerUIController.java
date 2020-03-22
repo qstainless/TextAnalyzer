@@ -1,7 +1,7 @@
-package com.gce.controller;
+package gce.textanalyzer.controller;
 
-import com.gce.model.Word;
-import com.gce.model.formValidation;
+import gce.textanalyzer.model.Word;
+import gce.textanalyzer.model.formValidation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

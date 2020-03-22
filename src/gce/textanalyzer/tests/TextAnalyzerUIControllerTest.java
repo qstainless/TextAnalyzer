@@ -1,6 +1,6 @@
-package com.gce.tests;
+package gce.textanalyzer.tests;
 
-import com.gce.controller.TextAnalyzerUIController;
+import gce.textanalyzer.controller.TextAnalyzerUIController;
 import org.junit.jupiter.api.*;
 
 import java.io.*;

@@ -1,4 +1,4 @@
-package com.gce;
+package gce.textanalyzer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

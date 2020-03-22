@@ -1,6 +1,6 @@
-package com.gce.tests;
+package gce.textanalyzer.tests;
 
-import com.gce.model.formValidation;
+import gce.textanalyzer.model.formValidation;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
