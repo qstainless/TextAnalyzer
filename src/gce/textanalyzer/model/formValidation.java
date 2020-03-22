@@ -14,7 +14,7 @@ public class formValidation {
      * or empty.
      *
      * @param input The value of the URL textfield.
-     * @return True if the URL texfield is not empty
+     * @return True if the URL textfield is not empty
      *
      * @see formValidation#textFieldNotEmpty(String, Label, String)
      */
@@ -32,7 +32,7 @@ public class formValidation {
      * @param input The value of the URL textfield.
      * @param messageLabel Placeholder in the GUI for error messages
      * @param validationText Feedback to user on errors.
-     * @return True if the URL texfield is not empty
+     * @return True if the URL textfield is not empty
      */
     public static boolean textFieldNotEmpty (String input, Label messageLabel, String validationText) {
         boolean out = true;

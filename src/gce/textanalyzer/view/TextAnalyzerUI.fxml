@@ -5,7 +5,7 @@ Main view of the TextAnalyzer GUI
 Created using SceneBuilder
 
 The generated .fxml file was edited to remove unused or
-unnecessarily redundand (default) properties
+unnecessarily redundant (default) properties
 -->
 
 <?import javafx.scene.control.*?>

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TextAnalyzerUIControllerTest {
 
-    static String malformedUrl = "fvsdfjkbweiqug";
+    static String malformedUrl = "a malformed url";
     static String invalidUrl = "http://shakespeare.mit.edu/macbeth/fulls.html";
     static String validUrl = "http://shakespeare.mit.edu/macbeth/full.html";
 
@@ -95,15 +95,15 @@ class TextAnalyzerUIControllerTest {
 
         // Create the expected values from the sample content:
         // "<p>This is a sample HTML line. It is what it is.</p>"
-        ArrayList<Integer> arraylist = new ArrayList<>();
-        arraylist.add(3);
-        arraylist.add(2);
-        arraylist.add(1);
-        arraylist.add(1);
-        arraylist.add(1);
-        arraylist.add(1);
-        arraylist.add(1);
-        arraylist.add(1);
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(3);
+        arrayList.add(2);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
 
         HashMap<String, Integer> testWords = new HashMap<>();
         testWords.put("is", 3);
@@ -120,7 +120,7 @@ class TextAnalyzerUIControllerTest {
         int count = 0;
 
         for (HashMap.Entry<String, Integer> words : sortedList) {
-            assertEquals(arraylist.get(count), words.getValue());
+            assertEquals(arrayList.get(count), words.getValue());
             count++;
         }
     }

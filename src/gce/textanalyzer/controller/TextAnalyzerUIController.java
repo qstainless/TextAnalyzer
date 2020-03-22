@@ -79,7 +79,7 @@ public class TextAnalyzerUIController implements Initializable {
     }
 
     /**
-     * Takes the URL provided in the {@code targetUrl} texfield and processes it
+     * Takes the URL provided in the {@code targetUrl} textfield and processes it
      * for analysis, as follows:
      * <ol>
      *     <li>First, it attempts to fetch the content from the URL by
@@ -155,7 +155,7 @@ public class TextAnalyzerUIController implements Initializable {
 
     /**
      * Calls the {@link formValidation} class methods to check whether
-     * or not the URL fiels is empty.
+     * or not the URL fields is empty.
      *
      * @param url The URL submitted by the user
      * @return True if the URL field is not empty
