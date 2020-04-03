@@ -26,7 +26,8 @@ unnecessarily redundant (default) properties
             <Font name="Lucida Sans Regular" size="13.0"/>
         </font>
     </Label>
-    <TextField fx:id="urlTextField" layoutX="103.0" layoutY="117.0" prefHeight="27.0" prefWidth="290.0">
+    <TextField fx:id="urlTextField" layoutX="103.0" layoutY="117.0" prefHeight="27.0" prefWidth="290.0"
+               text="http://shakespeare.mit.edu/macbeth/full.html">
         <font>
             <Font name="Lucida Sans Regular" size="13.0"/>
         </font>
