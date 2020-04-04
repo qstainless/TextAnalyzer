@@ -109,8 +109,7 @@ public class Database {
     public static ResultSet getAllWords() throws SQLException {
         dbConnection = dbConnect(databaseName);
 
-//        sql = "SELECT `wordContent`, `wordFrequency` FROM `word` ORDER BY `wordFrequency` DESC";
-        sql = "SELECT `wordContent` FROM " + databaseTable;
+        sql = "SELECT `wordContent`, `wordFrequency` FROM `word` ORDER BY `wordFrequency` DESC";
 
         Statement statement = dbConnection.createStatement();
 
@@ -125,14 +124,14 @@ public class Database {
     public static int getUniqueWordCount() throws SQLException {
         dbConnection = dbConnect(databaseName);
 
-        sql = "SELECT count(*) as `total` FROM " + databaseTable;
+        sql = "SELECT count(*) as `unique_count` FROM " + databaseTable;
         Statement statement = dbConnection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
 
         int out = 0;
 
         if (resultSet.next()) {
-            out = resultSet.getInt("total");
+            out = resultSet.getInt("unique_count");
         }
 
         resultSet.close();
@@ -150,14 +149,14 @@ public class Database {
     public static int getAllWordCount() throws SQLException {
         dbConnection = dbConnect(databaseName);
 
-        sql = "SELECT SUM(`wordFrequency`) as `total` FROM " + databaseTable;
+        sql = "SELECT SUM(`wordFrequency`) as `total_count` FROM " + databaseTable;
         Statement statement = dbConnection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
 
         int out = 0;
 
         if (resultSet.next()) {
-            out = resultSet.getInt("total");
+            out = resultSet.getInt("total_count");
         }
 
         resultSet.close();
