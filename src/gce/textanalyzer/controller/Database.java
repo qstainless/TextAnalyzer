@@ -8,6 +8,7 @@ import java.util.*;
 public class Database {
     private static Connection dbConnection;
     private static String databaseName = "word_occurrences";
+    private static String databaseTable = "word";
     private static String sql;
 
     /**
@@ -69,7 +70,7 @@ public class Database {
             while (wordsInLine.hasMoreTokens()) {
                 String word = wordsInLine.nextToken();
 
-                sql = "SELECT `wordFrequency` FROM `word` WHERE `wordContent`= '" + word.replace("'", "\\'") + "'";
+                sql = "SELECT `wordFrequency` FROM " + databaseTable + " WHERE `wordContent`= '" + word.replace("'", "\\'") + "'";
 
                 Statement statement = dbConnection.createStatement();
                 ResultSet resultSet = statement.executeQuery(sql);
@@ -78,13 +79,13 @@ public class Database {
                     int currentWordFrequency = resultSet.getInt(1);
                     int newWordFrequency = currentWordFrequency + 1;
 
-                    sql = "UPDATE `word` SET `wordFrequency`=? WHERE `wordContent`=?";
+                    sql = "UPDATE " + databaseTable + " SET `wordFrequency`=? WHERE `wordContent`=?";
 
                     preparedStatement = dbConnection.prepareStatement(sql);
                     preparedStatement.setInt(1, newWordFrequency);
                     preparedStatement.setString(2, word);
                 } else {
-                    sql = "INSERT INTO `word` (`wordContent`, `wordFrequency`) VALUES (?,?)";
+                    sql = "INSERT INTO " + databaseTable + " (`wordContent`, `wordFrequency`) VALUES (?,?)";
 
                     preparedStatement = dbConnection.prepareStatement(sql);
                     preparedStatement.setString(1, word);
@@ -108,7 +109,8 @@ public class Database {
     public static ResultSet getAllWords() throws SQLException {
         dbConnection = dbConnect(databaseName);
 
-        sql = "SELECT `wordContent`, `wordFrequency` FROM `word` ORDER BY `wordFrequency` DESC";
+//        sql = "SELECT `wordContent`, `wordFrequency` FROM `word` ORDER BY `wordFrequency` DESC";
+        sql = "SELECT `wordContent` FROM " + databaseTable;
 
         Statement statement = dbConnection.createStatement();
 
@@ -123,7 +125,7 @@ public class Database {
     public static int getUniqueWordCount() throws SQLException {
         dbConnection = dbConnect(databaseName);
 
-        sql = "SELECT count(*) as `total` FROM `word`";
+        sql = "SELECT count(*) as `total` FROM " + databaseTable;
         Statement statement = dbConnection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
 
@@ -148,7 +150,7 @@ public class Database {
     public static int getAllWordCount() throws SQLException {
         dbConnection = dbConnect(databaseName);
 
-        sql = "SELECT SUM(`wordFrequency`) as `total` FROM `word`";
+        sql = "SELECT SUM(`wordFrequency`) as `total` FROM " + databaseTable;
         Statement statement = dbConnection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
 
@@ -183,7 +185,7 @@ public class Database {
             statement.executeUpdate(sql);
 
             // Create the table if it does not already exist
-            sql = "CREATE TABLE IF NOT EXISTS `word` (" +
+            sql = "CREATE TABLE IF NOT EXISTS " + databaseTable + " (" +
                     "`wordContent` VARCHAR(64) NOT NULL, " +
                     "`wordFrequency` INT(11) NOT NULL, " +
                     "UNIQUE INDEX `wordContent_unique` (`wordContent`)" +
@@ -191,7 +193,7 @@ public class Database {
             statement.executeUpdate(sql);
 
             // Clear the table
-            sql = "TRUNCATE `word`";
+            sql = "TRUNCATE " + databaseTable;
             statement.executeUpdate(sql);
 
             statement.close();
