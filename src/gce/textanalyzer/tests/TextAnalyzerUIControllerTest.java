@@ -1,12 +1,16 @@
 package gce.textanalyzer.tests;
 
+import gce.textanalyzer.controller.Database;
 import gce.textanalyzer.controller.TextAnalyzerUIController;
 import org.junit.jupiter.api.*;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,71 +57,60 @@ class TextAnalyzerUIControllerTest {
     }
 
     /**
-     * Tests the countWordFrequencies method
-     *
-     * @throws IOException The IOException
+     * Tests the database connection
      */
     @Test
     @Order(4)
-    @DisplayName("The resulting HashMap should contain the correct keys and values.")
-    void testCountWordFrequencies() throws IOException {
-        String sampleContent = "<p>This is a sample HTML line. It is what it is.</p>";
-
-        HashMap<String, Integer> expected = new HashMap<>();
-        expected.put("this", 1);
-        expected.put("is", 3);
-        expected.put("a", 1);
-        expected.put("sample", 1);
-        expected.put("html", 1);
-        expected.put("line", 1);
-        expected.put("it", 2);
-        expected.put("what", 1);
-
-        // The countWordFrequencies method parses the BufferedReader
-        // So we must first convert the sampleContent to BufferedReader
-        Reader inputString = new StringReader(sampleContent);
-        BufferedReader reader = new BufferedReader(inputString);
-
-        assertEquals(expected, TextAnalyzerUIController.countWordFrequencies(reader));
+    @DisplayName("A database connection is successfully created.")
+    void testDatabaseConnection() {
+        Connection connection = Database.dbConnect("word_occurrences");
+        assertNotNull(connection);
     }
 
     /**
-     * Tests for sorting of the key/value pairs in the HashMap
+     * Creates the word_occurrences schema
      */
     @Test
     @Order(5)
-    @DisplayName("The ArrayList should contain the properly sorted list of words.")
-    void testSortWordsByFrequency() {
-
-        // Create the expected values from the sample content:
-        // "<p>This is a sample HTML line. It is what it is.</p>"
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        arrayList.add(3);
-        arrayList.add(2);
-        arrayList.add(1);
-        arrayList.add(1);
-        arrayList.add(1);
-        arrayList.add(1);
-        arrayList.add(1);
-        arrayList.add(1);
-
-        HashMap<String, Integer> testWords = new HashMap<>();
-        testWords.put("is", 3);
-        testWords.put("it", 2);
-        testWords.put("a", 1);
-        testWords.put("what", 1);
-        testWords.put("line", 1);
-        testWords.put("this", 1);
-        testWords.put("html", 1);
-        testWords.put("sample", 1);
-
-        ArrayList<HashMap.Entry<String, Integer>> sortedList = TextAnalyzerUIController.sortWordsByFrequency(testWords);
-
-        int count = 0;
-
-        for (HashMap.Entry<String, Integer> words : sortedList) {
-            assertEquals(arrayList.get(count), words.getValue());
-            count++;
-        }
+    @DisplayName("The 'word_occurrences' schema and the 'word' table are created if they don't already exist.")
+    void testSchemaAndTableCreation() {
+        Database.createSchema();
     }
+
+    @Test
+    @Order(6)
+    @DisplayName("Populates the database with words from http://shakespeare.mit.edu/macbeth/full.html")
+    public void testGetData() throws IOException, SQLException {
+        BufferedReader targetHtmlContent = TextAnalyzerUIController.fetchUrlContent("http://shakespeare.mit.edu/macbeth/full.html");
+        Database.storeWordsIntoDatabase(targetHtmlContent);
+    }
+
+    @Test
+    @Order(7)
+    @DisplayName("Fetches all words from the database.")
+    void testGetAllWords() throws SQLException, IOException {
+        ResultSet allWords = Database.getAllWords();
+        while (allWords.next()) {
+            System.out.println(allWords.getString("wordContent") + ": " + allWords.getInt("wordFrequency"));
+        }
+
+        allWords.close();
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("Verify that the target URL has 3394 unique words.")
+    void testGetUniqueWordCount() throws SQLException, IOException {
+        int uniqueWords = Database.getUniqueWordCount();
+        assertEquals(3394, uniqueWords);
+    }
+
+    @Test
+    @Order(9)
+    @DisplayName("Verify that the target URL has 18122 total words.")
+    void testGetAllWordCount() throws SQLException, IOException {
+        int allWords = Database.getAllWordCount();
+        assertEquals(18122, allWords);
+    }
+
 }
