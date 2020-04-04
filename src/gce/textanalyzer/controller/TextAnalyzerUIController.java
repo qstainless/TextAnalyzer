@@ -123,7 +123,8 @@ public class TextAnalyzerUIController implements Initializable {
     }
 
     /**
-     * Parses through the {@code sortedWordList} and populates the
+     * Fetches the database for the unique word count, total word count
+     * and then fetches all words and their frequencies to populate the
      * {@code TableView} with the words sorted by frequency in descending
      * order. Displays the total number of words and number of unique words
      * found in the source URL.
