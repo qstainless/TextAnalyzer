@@ -210,6 +210,11 @@ public class Database {
         }
     }
 
+    /**
+     * Closes the database connection
+     * 
+     * @throws SQLException If an SQL exception occurs
+     */
     public static void closeConnection() throws SQLException {
         dbConnection.close();
     }
