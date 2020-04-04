@@ -60,7 +60,8 @@ The version numbering of this project does not follow most version numbering gui
 ```(major).(course module)``` 
 
 ```
-Version 1.9 (current) - Added JavaDocs
+Version 1.10 (current) - Added database support
+Version 1.9 - Added JavaDocs
 Version 1.7 - Added unit tests using JUnit
 Version 1.6 - Aded GUI functionality
 Version 1.2 - First version

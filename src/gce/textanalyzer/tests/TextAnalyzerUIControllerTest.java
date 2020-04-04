@@ -4,6 +4,7 @@ import gce.textanalyzer.controller.Database;
 import gce.textanalyzer.controller.TextAnalyzerUIController;
 import org.junit.jupiter.api.*;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -78,8 +79,16 @@ class TextAnalyzerUIControllerTest {
 
     @Test
     @Order(6)
-    @DisplayName("Get all words.")
-    void testGetAllWords() throws SQLException {
+    @DisplayName("Populates the database with words from http://shakespeare.mit.edu/macbeth/full.html")
+    public void testGetData() throws IOException, SQLException {
+        BufferedReader targetHtmlContent = TextAnalyzerUIController.fetchUrlContent("http://shakespeare.mit.edu/macbeth/full.html");
+        Database.storeWordsIntoDatabase(targetHtmlContent);
+    }
+
+    @Test
+    @Order(7)
+    @DisplayName("Fetches all words from the database.")
+    void testGetAllWords() throws SQLException, IOException {
         ResultSet allWords = Database.getAllWords();
         while (allWords.next()) {
             System.out.println(allWords.getString("wordContent") + ": " + allWords.getInt("wordFrequency"));
@@ -89,18 +98,19 @@ class TextAnalyzerUIControllerTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     @DisplayName("Verify that the target URL has 3394 unique words.")
-    void testGetUniqueWordCount() throws SQLException {
+    void testGetUniqueWordCount() throws SQLException, IOException {
         int uniqueWords = Database.getUniqueWordCount();
         assertEquals(3394, uniqueWords);
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     @DisplayName("Verify that the target URL has 18122 total words.")
-    void testGetAllWordCount() throws SQLException {
-        int uniqueWords = Database.getAllWordCount();
-        assertEquals(18122, uniqueWords);
+    void testGetAllWordCount() throws SQLException, IOException {
+        int allWords = Database.getAllWordCount();
+        assertEquals(18122, allWords);
     }
+
 }
