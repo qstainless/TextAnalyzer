@@ -20,7 +20,7 @@ public class Database {
     private static String sql;
 
     /**
-     * Creates a database connection. Assumes that
+     * Creates a database connection.
      *
      * @return The database connection
      */
@@ -38,12 +38,10 @@ public class Database {
                         "&serverTimezone=UTC";
                 dbConnection = DriverManager.getConnection(connectionUrl, databaseUser, databasePass);
             } catch (SQLException ex) {
-                // log an exception. fro example:
                 System.out.println("Failed to create the database connection.");
                 System.out.println(ex);
             }
         } catch (ClassNotFoundException ex) {
-            // log an exception. for example:
             System.out.println("Driver not found.");
         }
 
@@ -84,7 +82,7 @@ public class Database {
                 ResultSet resultSet = statement.executeQuery(sql);
 
                 if (resultSet.next()) {
-                    int currentWordFrequency = resultSet.getInt(1);
+                    int currentWordFrequency = resultSet.getInt("wordFrequency");
                     int newWordFrequency = currentWordFrequency + 1;
 
                     sql = "UPDATE " + databaseTable + " SET `wordFrequency`=? WHERE `wordContent`=?";
@@ -209,10 +207,8 @@ public class Database {
             se.printStackTrace();
         } finally {
             try {
-                // Close the database connection
                 closeConnection();
             } catch (SQLException e) {
-                System.out.println(e); // debug
                 e.printStackTrace();
             }
         }
