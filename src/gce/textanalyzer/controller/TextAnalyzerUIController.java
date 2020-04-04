@@ -16,11 +16,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.sql.*;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.ResourceBundle;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * This is the main controller for the GUI of the TextAnalyzer application.
@@ -69,7 +67,6 @@ public class TextAnalyzerUIController implements Initializable {
 
     /**
      * Action to perform when the Analyze! button is clicked
-     *
      */
     @FXML
     public void handleAnalyzeButtonAction() {
@@ -85,13 +82,12 @@ public class TextAnalyzerUIController implements Initializable {
      *     method. If the URL is empty or invalid (not found/malformed
      *     URL), the program will display an error message.</li>
      *     <li>Next, the program will call the
-     *     {@link TextAnalyzerUIController#countWordFrequencies} method
-     *     to count the frequency of words after stripping away all HTML
-     *     tags and some punctuation. The unique words and their
-     *     frequencies will be added to a HashMap.</li>
-     *     <li>The program will then create an ArrayList from the HashMap
-     *     to sort the words by frequency in descending order by calling
-     *     {@link TextAnalyzerUIController#sortWordsByFrequency}.</li>
+     *     {@link Database#storeWordsIntoDatabase} method to store the
+     *     unique words and their frequencies in the database, after
+     *     stripping away all HTML tags and some punctuation. </li>
+     *     <li>The program will then read the words from the database,
+     *     sorted by frequency in descending order by calling
+     *     {@link Database#getAllWords()}.</li>
      *     <li>Finally, the program will populate the {@code wordTableView}
      *     in the GUI with the results.</li>
      * </ol>
@@ -103,6 +99,8 @@ public class TextAnalyzerUIController implements Initializable {
         wordTableView.getItems().clear();
         wordTableView.setEditable(false);
 
+        Database.createSchema();
+
         if (validateUrl(url)) {
             // The target URL to parse
             String targetUrl = urlTextField.getText();
@@ -111,16 +109,15 @@ public class TextAnalyzerUIController implements Initializable {
                 // Fetch the URL content
                 BufferedReader targetHtmlContent = fetchUrlContent(targetUrl);
 
-                // Create a HashMap with the extracted words and their frequencies
-                HashMap<String, Integer> wordFrequencies = countWordFrequencies(targetHtmlContent);
-
-                // Create an ArrayList with the extracted words sorted by frequency in descending order
-                ArrayList<HashMap.Entry<String, Integer>> sortedWordList = sortWordsByFrequency(wordFrequencies);
+                // Stores the HashMap key/value pairs in the database
+                Database.storeWordsIntoDatabase(targetHtmlContent);
 
                 // Populate the wordTableView in the GUI with the results
-                displaySortedWords(sortedWordList);
-            } catch (IOException e) {
-                formValidation.textFieldNotEmpty(null, messageLabel, "An error occurred. An invalid URL, perhaps?");
+                displaySortedWords();
+            } catch (IOException | SQLException e) {
+                formValidation.textFieldNotEmpty(null, messageLabel, "An error occurred. An invalid URL, perhaps? " +
+                        "See console for additional details.");
+                System.out.println(e);
             }
         }
     }
@@ -130,21 +127,25 @@ public class TextAnalyzerUIController implements Initializable {
      * {@code TableView} with the words sorted by frequency in descending
      * order. Displays the total number of words and number of unique words
      * found in the source URL.
-     *
-     * @param sortedWordList The sortedWordList to display
      */
-    public void displaySortedWords(ArrayList<HashMap.Entry<String, Integer>> sortedWordList) {
+    public void displaySortedWords() throws SQLException {
         int rank = 0;
+        int uniqueWords = Database.getUniqueWordCount();
+        int totalNumberOfWords = Database.getAllWordCount();
 
         NumberFormat wordCountFormat = NumberFormat.getInstance();
 
         ObservableList<Word> words = FXCollections.observableArrayList();
 
-        for (HashMap.Entry<String, Integer> temp : sortedWordList) {
-            words.add(new Word(++rank, temp.getKey(), temp.getValue()));
+        ResultSet wordPairs = Database.getAllWords();
+
+        while (wordPairs.next()) {
+            words.add(new Word(++rank, wordPairs.getString(1), wordPairs.getInt(2)));
         }
 
-        messageLabel.setText("After parsing, " + wordCountFormat.format(rank)
+        wordPairs.close();
+
+        messageLabel.setText("After parsing, " + wordCountFormat.format(uniqueWords)
                 + " unique words were found, out of a total of "
                 + wordCountFormat.format(totalNumberOfWords) + " words.");
 
@@ -171,61 +172,6 @@ public class TextAnalyzerUIController implements Initializable {
      */
     public static BufferedReader fetchUrlContent(String targetUrl) throws IOException {
         return new BufferedReader(new InputStreamReader(new URL(targetUrl).openStream()));
-    }
-
-    /**
-     * Creates a {@code HashMap} to store the words extracted from the URL and their
-     * frequencies.
-     *
-     * @param urlContent The buffered URL content
-     * @return The HashMap with words and their frequencies as keys and value, respectively
-     * @throws IOException the IO Exception
-     */
-    public static HashMap<String, Integer> countWordFrequencies(BufferedReader urlContent) throws IOException {
-        // Temporary string to store each line of the buffered inputUrl
-        String inputLine;
-
-        // HashMap stores words as keys and frequency as values
-        HashMap<String, Integer> wordCount = new HashMap<>();
-
-        // Add words and their frequency to the hash map
-        while ((inputLine = urlContent.readLine()) != null) {
-            // convert the html formatted line to plain text
-            String filteredInputLine = htmlToText(inputLine);
-
-            // extract words from filteredInputLine using StringTokenizer
-            StringTokenizer wordsInLine = new StringTokenizer(filteredInputLine);
-
-            // add words and their frequencies to the wordCount HashMap
-            while (wordsInLine.hasMoreTokens()) {
-                String word = wordsInLine.nextToken();
-                totalNumberOfWords++;
-                Integer currentWordFrequency = wordCount.get(word);
-                int newWordFrequency = currentWordFrequency == null ? 1 : currentWordFrequency + 1;
-                wordCount.put(word, newWordFrequency);
-            }
-        }
-
-        urlContent.close();
-
-        return wordCount;
-    }
-
-    /**
-     * Creates an {@code ArrayList} that will contain the sorted {@code wordCount HashMap}
-     * keys by values in descending order. Uses {@code Comparator} to sort the {@code ArrayList}
-     *
-     * @param wordCount The HashMap with words and their frequencies
-     * @return The sortedWordList ArrayList
-     */
-    public static ArrayList<HashMap.Entry<String, Integer>> sortWordsByFrequency(HashMap<String, Integer> wordCount) {
-        // create and populate an ArrayList with the words in the wordCount HashMap and their frequencies
-        ArrayList<HashMap.Entry<String, Integer>> sortedWordList = new ArrayList<>(wordCount.entrySet());
-
-        // Sort the ArrayList
-        sortedWordList.sort((freq1, freq2) -> freq2.getValue().compareTo(freq1.getValue()));
-
-        return sortedWordList;
     }
 
     /**
