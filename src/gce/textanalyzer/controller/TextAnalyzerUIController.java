@@ -140,7 +140,7 @@ public class TextAnalyzerUIController implements Initializable {
         ResultSet wordPairs = Database.getAllWords();
 
         while (wordPairs.next()) {
-            words.add(new Word(++rank, wordPairs.getString(1), wordPairs.getInt(2)));
+            words.add(new Word(++rank, wordPairs.getString("wordContent"), wordPairs.getInt("wordFrequency")));
         }
 
         wordPairs.close();
