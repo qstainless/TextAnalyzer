@@ -12,7 +12,7 @@ The original version of the program was contained in a single class and output w
 ## Test plans and standards
 The program was not originally developed using TDD (Test Driven Development) standards. In other words, no unit tests were used to test the code or expected output. Testing was done incrementally, that is, after each minor complete change, typically after each line of code was added, mainly to catch compile-time and runtime errors not previously caught and highlighted by the IDE.
 
-The current version (1.7) of the program now includes unit tests created using Junit.
+As of version 1.7, the program includes unit tests created using Junit.
 
 ## System requirements
 The program in its current version is a JavaFX application, using version 8 of Amazon's distribution of the Open Java Development Kit (OpenJDK) [Corretto 8](https://aws.amazon.com/corretto/), which includes JavaFX 8. Unit tests were created using [Junit 5](https://github.com/junit-team/junit5/).
@@ -81,4 +81,4 @@ Version 1.2 - First version
 ### formValidation Class
 ![formValidation Class Unit Tests](TextAnalyzer-Screenshot-Tests-formValidation.png)
 ### TextAnalyzerUIController Class
-![TextAnalyzerUIController Class Unit Tests](TextAnalyzer-Screenshot-Tests-TextAnalyzerUIController.png)
+![TextAnalyzerUIController Class Unit Tests](TextAnalyzer-Screenshot-Tests-TextAnalyzerUIController-Database.png)
