@@ -55,10 +55,10 @@ public class Database {
 
         PreparedStatement preparedStatement;
 
-        // Temporary string to store each line of the buffered inputUrl
+        // Temporary string to store each line of the buffered urlContent
         String inputLine;
 
-        // Add words and their frequency to the hash map
+        // Add words and their frequency to the database
         while ((inputLine = urlContent.readLine()) != null) {
             // convert the html formatted line to plain text
             String filteredInputLine = TextAnalyzerUIController.htmlToText(inputLine);
@@ -66,7 +66,7 @@ public class Database {
             // extract words from filteredInputLine using StringTokenizer
             StringTokenizer wordsInLine = new StringTokenizer(filteredInputLine);
 
-            // add words and their frequencies to the wordCount HashMap
+            // add words and their frequencies to the database
             while (wordsInLine.hasMoreTokens()) {
                 String word = wordsInLine.nextToken();
 
