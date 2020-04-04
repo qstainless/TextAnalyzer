@@ -5,6 +5,14 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * Database class
+ *
+ * Requirements:
+ * 1. The MySQL Java Connector is properly included in the project's libraries
+ * 2. Will connect to host:localhost at default MySQL port 3306
+ * 3. Assumes that a user exists with username/passwrd textanalyzer/textanalyzer
+ */
 public class Database {
     private static Connection dbConnection;
     private static String databaseName = "word_occurrences";
@@ -21,8 +29,8 @@ public class Database {
             String mysqlDriver = "com.mysql.cj.jdbc.Driver";
             Class.forName(mysqlDriver);
             try {
-                String databasePass = "textanalyzer";
                 String databaseUser = "textanalyzer";
+                String databasePass = "textanalyzer";
                 String connectionUrl = "jdbc:mysql://localhost:3306/" + databaseName +
                         "?useUnicode=true" +
                         "&useJDBCCompliantTimezoneShift=true" +

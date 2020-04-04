@@ -17,6 +17,15 @@ As of version 1.7, the program includes unit tests created using Junit.
 ## System requirements
 The program in its current version is a JavaFX application, using version 8 of Amazon's distribution of the Open Java Development Kit (OpenJDK) [Corretto 8](https://aws.amazon.com/corretto/), which includes JavaFX 8. Unit tests were created using [Junit 5](https://github.com/junit-team/junit5/).
 
+The program also requires that a user with all database privileges be creaated in the local MySQL database with username/password: textanalyzer/textanalyzer. However, the user may change these credentials by editing lines 32 and 33 in the `Database` class:
+
+```
+/src/gce/textanalyzer/controller/Database.java
+
+32    String databaseUser = "textanalyzer";
+33    String databasePass = "textanalyzer";
+```
+
 ## How to use this program.
 The program requires no user interaction other than compilation and execution. The GUI is made up of a single stage (window) and a single scene (window content). The scene presents the user with an input field to specify the URL of the file they wish to parse. The results will be displayed in a TableVIew.
 
