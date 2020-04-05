@@ -4,7 +4,7 @@
 This exercise uses a GUI (Graphical User Interface) that allows a user to specify a URL (Uniform Resource Locator or website address) from which the file will be read and displays statistics about the words in that file, excluding HTML (HyperText Markup Language) tags.
 
 ## What does this program do?
-The program reads the text contents of a URL and will use specific filters to strip the HTML tags and punctuation from the file. It will then store all unique words and their frequencies into a MySQL database. Next, the program will read the word/frequency pairs from the database to display them in the GUI, ordered by word frequency in descending order.
+The program reads the text contents of a URL and will use specific filters to strip the HTML tags and punctuation from the file (see [Known Issues](#known-issues). It will then store all unique words and their frequencies into a MySQL database. Next, the program will read the word/frequency pairs from the database to display them in the GUI, ordered by word frequency in descending order.
 
 ## Code design
 The original version of the program was contained in a single class and output was made exclusively to the console. The source file URL was hardcoded, meaning that the user had no way to choose what file to parse, unless the user knew their way around the code to change the target URL in the source code. The current version of the program uses JavaFX to present a GUI that allows the user to enter the URL of the file they wish to parse.
