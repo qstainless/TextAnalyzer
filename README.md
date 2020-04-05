@@ -4,7 +4,7 @@
 This exercise uses a GUI (Graphical User Interface) that allows a user to specify a URL (Uniform Resource Locator or website address) from which the file will be read and displays statistics about the words in that file, excluding HTML (HyperText Markup Language) tags.
 
 ## What does this program do?
-The program reads the text contents of a URL and will use specific filters to strip the HTML tags and punctuation from the file. It will then output the word frequencies of all words in the file, sorted by the most frequently used words. The output shows a set of pairs, each pair containing a word and how many times it occurred in the file, ordered by frequency in descending order.
+The program reads the text contents of a URL and will use specific filters to strip the HTML tags and punctuation from the file. It will then store all unique words and their frequencies into a MySQL database. Next, the program will read the word/frequency pairs from the database to display them in the GUI, ordered by word frequency in descending order.
 
 ## Code design
 The original version of the program was contained in a single class and output was made exclusively to the console. The source file URL was hardcoded, meaning that the user had no way to choose what file to parse, unless the user knew their way around the code to change the target URL in the source code. The current version of the program uses JavaFX to present a GUI that allows the user to enter the URL of the file they wish to parse.
@@ -15,7 +15,7 @@ The program was not originally developed using TDD (Test Driven Development) sta
 As of version 1.7, the program includes unit tests created using Junit.
 
 ## System requirements
-The program in its current version is a JavaFX application, using version 8 of Amazon's distribution of the Open Java Development Kit (OpenJDK) [Corretto 8](https://aws.amazon.com/corretto/), which includes JavaFX 8. Unit tests were created using [Junit 5](https://github.com/junit-team/junit5/).
+The program is a JavaFX application, using version 8 of Amazon's distribution of the Open Java Development Kit (OpenJDK) [Corretto 8](https://aws.amazon.com/corretto/), which includes JavaFX 8. Unit tests were created using [Junit 5](https://github.com/junit-team/junit5/).
 
 The program also requires that a user with all database privileges be creaated in the local MySQL database with username/password: textanalyzer/textanalyzer. However, the user may change these credentials by editing lines 32 and 33 in the `Database` class:
 
@@ -27,9 +27,11 @@ The program also requires that a user with all database privileges be creaated i
 ```
 
 ## How to use this program.
-The program requires no user interaction other than compilation and execution. The GUI is made up of a single stage (window) and a single scene (window content). The scene presents the user with an input field to specify the URL of the file they wish to parse. The results will be displayed in a TableVIew.
+The program requires no user interaction other than compilation and execution. However, the user must first create a local MySQL user for the program to interact with the database (see [System Requirements](#system-requirements)). 
 
-After the results are displayed, the user can enter another URL for analysis.
+The GUI is made up of a single stage (window) and a single scene (window content). Although the scene's input field is pre-populated with the exercise's target URL, the user may specify the URL of a different file to parse. The results will be displayed in the TableVIew.
+
+After the results are displayed, the user may enter the URL of another file for analysis.
 
 ## Installation.
 To install the program, simply clone the repo, open it in your favorite IDE, and run it. Make sure that Java JDK 8 and JavaFX 8 are installed in your system. 
