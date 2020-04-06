@@ -88,7 +88,7 @@ class TextAnalyzerUIControllerTest {
     @Test
     @Order(7)
     @DisplayName("Fetches all words from the database.")
-    void testGetAllWords() throws SQLException, IOException {
+    void testGetAllWords() throws SQLException {
         ResultSet allWords = Database.getAllWords();
         while (allWords.next()) {
             System.out.println(allWords.getString("wordContent") + ": " + allWords.getInt("wordFrequency"));
@@ -100,7 +100,7 @@ class TextAnalyzerUIControllerTest {
     @Test
     @Order(8)
     @DisplayName("Verify that the target URL has 3394 unique words.")
-    void testGetUniqueWordCount() throws SQLException, IOException {
+    void testGetUniqueWordCount() throws SQLException {
         int uniqueWords = Database.getUniqueWordCount();
         assertEquals(3394, uniqueWords);
     }
@@ -108,7 +108,7 @@ class TextAnalyzerUIControllerTest {
     @Test
     @Order(9)
     @DisplayName("Verify that the target URL has 18122 total words.")
-    void testGetAllWordCount() throws SQLException, IOException {
+    void testGetAllWordCount() throws SQLException {
         int allWords = Database.getAllWordCount();
         assertEquals(18122, allWords);
     }
