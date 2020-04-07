@@ -27,13 +27,16 @@ As of version 1.7, the program includes unit tests created using Junit.
 ## System requirements
 The program is a JavaFX application using version 8 of Amazon's distribution of the Open Java Development Kit (OpenJDK) [Corretto 8](https://aws.amazon.com/corretto/), which includes JavaFX 8. Unit tests were created using [Junit 5](https://github.com/junit-team/junit5/).
 
-The program also requires an existing database user with all database privileges in the local MySQL database with username/password: textanalyzer/textanalyzer. However, the user may change these credentials by editing lines 32 and 33 in the `Database` class: 
+## Database connection defaults
+The program assumes that an existing database user with all database privileges in the local MySQL database with username/password: textanalyzer/textanalyzer. It also assumes that it will connect to localhost using default port 3306. However, the user may change these initial configuration options by editing lines 32 to 35 in the `Database` class: 
 
 ```
 /src/gce/textanalyzer/controller/Database.java
 
-32    String databaseUser = "textanalyzer";
-33    String databasePass = "textanalyzer";
+32    String databaseHost = "localhost";
+33    String databasePort = "3306";
+34    String databaseUser = "textanalyzer";
+35    String databasePass = "textanalyzer";
 ```
 
 ## How to use this program.

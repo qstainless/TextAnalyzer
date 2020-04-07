@@ -29,9 +29,12 @@ public class Database {
             String mysqlDriver = "com.mysql.cj.jdbc.Driver";
             Class.forName(mysqlDriver);
             try {
+                String databaseHost = "localhost";
+                String databasePort = "3306";
                 String databaseUser = "textanalyzer";
                 String databasePass = "textanalyzer";
-                String connectionUrl = "jdbc:mysql://localhost:3306/" + databaseName +
+
+                String connectionUrl = "jdbc:mysql://" + databaseHost + ":" + databasePort + "/" + databaseName +
                         "?useUnicode=true" +
                         "&useJDBCCompliantTimezoneShift=true" +
                         "&useLegacyDatetimeCode=false" +
