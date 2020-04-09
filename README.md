@@ -1,4 +1,5 @@
 # TextAnalyzer
+Go to [TextAnalyzer Server](https://github.com/qstainless/TextAnalyzerServer) or [TextAnalyzer Client](https://github.com/qstainless/TextAnalyzerClient).
 
 ## Overview
 This exercise uses a GUI (Graphical User Interface) that allows a user to specify a URL (Uniform Resource Locator or website address) from which a file will be read and displays statistics about the words in that file, excluding HTML (HyperText Markup Language) tags. 

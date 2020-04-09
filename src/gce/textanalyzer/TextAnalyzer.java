@@ -16,7 +16,7 @@ import javafx.stage.Stage;
  * Instructor: Dr. Lisa Macon
  *
  * @author Guillermo Castaneda Echegaray
- * @version 1.9
+ * @version 1.10
  * @since 2020-01-11
  */
 public class TextAnalyzer extends Application {
