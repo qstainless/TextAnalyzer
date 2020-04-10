@@ -95,8 +95,6 @@ Version 1.2 - First version
 ## Screenshots
 ### Initial prompt
 ![Initial Prompt](TextAnalyzer-Screenshot-Initial-Prompt.png)
-### Empty URL
-![Empty URL](TextAnalyzer-Screenshot-Empty-URL.png)
 ### Invalid URL
 ![Invalid URL](TextAnalyzer-Screenshot-Invalid-URL.png)
 ### Results
