@@ -74,7 +74,7 @@ public class TextAnalyzerUIController implements Initializable {
     }
 
     /**
-     * Action to perform when the Exit button is clicked
+     * Action to perform when the Quit menu item or Quit button is clicked
      */
     @FXML
     public void handleQuitButtonAction() {
