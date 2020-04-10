@@ -194,7 +194,7 @@ public class Database {
 
             // Create the table if it does not already exist
             sql = "CREATE TABLE IF NOT EXISTS " + databaseTable + " (" +
-                    "`wordContent` VARCHAR(64) NOT NULL, " +
+                    "`wordContent` VARCHAR(255) NOT NULL, " +
                     "`wordFrequency` INT(11) NOT NULL, " +
                     "UNIQUE INDEX `wordContent_unique` (`wordContent`)" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8";
