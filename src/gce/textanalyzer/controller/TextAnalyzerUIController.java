@@ -166,7 +166,7 @@ public class TextAnalyzerUIController implements Initializable {
      * @return True if the URL field is not empty
      */
     public boolean validateUrl(String url) {
-        return formValidation.textFieldNotEmpty(url, messageLabel, "The URL cannot be empty.");
+        return formValidation.textFieldNotEmpty(url, messageLabel, "The URL must be valid and cannot be empty.");
     }
 
     /**
