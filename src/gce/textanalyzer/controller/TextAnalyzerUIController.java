@@ -25,9 +25,6 @@ import java.util.*;
  */
 public class TextAnalyzerUIController implements Initializable {
 
-    // The total number of words fetched from the targetUrl
-    private static int totalNumberOfWords;
-
     @FXML
     private Label messageLabel;
 
