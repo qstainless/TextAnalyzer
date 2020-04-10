@@ -7,16 +7,16 @@ import java.util.*;
 
 /**
  * Database class
- *
+ * <p>
  * Requirements:
  * 1. The MySQL Java Connector is properly included in the project's libraries
  * 2. Will connect to host:localhost at default MySQL port 3306
  * 3. Assumes that a user exists with username/passwrd textanalyzer/textanalyzer
  */
 public class Database {
+    private static final String databaseName = "word_occurrences";
+    private static final String databaseTable = "word";
     private static Connection dbConnection;
-    private static String databaseName = "word_occurrences";
-    private static String databaseTable = "word";
     private static String sql;
 
     /**
@@ -219,7 +219,7 @@ public class Database {
 
     /**
      * Closes the database connection
-     * 
+     *
      * @throws SQLException If an SQL exception occurs
      */
     public static void closeConnection() throws SQLException {
