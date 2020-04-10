@@ -1,7 +1,6 @@
 package gce.textanalyzer.controller;
 
 import gce.textanalyzer.model.Word;
-import gce.textanalyzer.model.formValidation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -120,7 +119,7 @@ public class TextAnalyzerController implements Initializable {
                 // Populate the wordTableView in the GUI with the results
                 displaySortedWords();
             } catch (IOException | SQLException e) {
-                formValidation.textFieldNotEmpty(null, messageLabel, "An error occurred. An invalid URL, perhaps? " +
+                textFieldNotEmpty(null, messageLabel, "An error occurred. An invalid URL, perhaps? " +
                         "See console for additional details.");
                 System.out.println(e);
             }
@@ -159,14 +158,13 @@ public class TextAnalyzerController implements Initializable {
     }
 
     /**
-     * Calls the {@link formValidation} class methods to check whether
-     * or not the URL fields is empty.
+     * Checks whether or not the URL field is empty or valid.
      *
      * @param url The URL submitted by the user
      * @return True if the URL field is not empty
      */
     public boolean validateUrl(String url) {
-        return formValidation.textFieldNotEmpty(url, messageLabel, "The URL must be valid and cannot be empty.");
+        return textFieldNotEmpty(url, messageLabel, "The URL must be valid and cannot be empty.");
     }
 
     /**
@@ -200,5 +198,60 @@ public class TextAnalyzerController implements Initializable {
                 .replaceAll("[\\[|.?!,;:{}()\\]]", "")
                 .replaceAll("--", " ")
                 .trim();
+    }
+
+    /**
+     * {@code out} defaults to false if the input parameter is <tt>null</tt>
+     * or empty.
+     *
+     * @param targetUrl The value of the URL textfield.
+     * @return True if the URL textfield is not empty
+     *
+     * @see TextAnalyzerController#textFieldNotEmpty(String, Label, String)
+     */
+    public static boolean textFieldNotEmpty (String targetUrl) {
+        boolean out = false;
+
+        if (targetUrl != null && !targetUrl.isEmpty() && isValidURL(targetUrl)) {
+            out = true;
+        }
+
+        return out;
+    }
+
+    /**
+     * @param targetUrl The value of the URL textfield.
+     * @param messageLabel Placeholder in the GUI for error messages
+     * @param validationText Feedback to user on errors.
+     * @return True if the URL textfield is not empty
+     */
+    public static boolean textFieldNotEmpty (String targetUrl, Label messageLabel, String validationText) {
+        boolean out = true;
+        String message = null;
+
+        if (!textFieldNotEmpty(targetUrl)) {
+            out = false;
+            message = validationText;
+        }
+
+        messageLabel.setText(message);
+
+        return out;
+    }
+
+    /**
+     * Checks if the targetUrl is a valid URL
+     *
+     * @param targetUrl The target URL entered by the user
+     * @return True if the URL is valir
+     */
+    public static boolean isValidURL(String targetUrl) {
+        try {
+            URL url = new URL(targetUrl);
+            url.toURI();
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 }
