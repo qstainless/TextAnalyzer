@@ -87,12 +87,12 @@ public class TextAnalyzerController implements Initializable {
      *     method. If the URL is empty or invalid (not found/malformed
      *     URL), the program will display an error message.</li>
      *     <li>Next, the program will call the
-     *     {@link Database#storeWordsIntoDatabase} method to store the
+     *     {@link DatabaseController#storeWordsIntoDatabase} method to store the
      *     unique words and their frequencies in the database, after
      *     stripping away all HTML tags and some punctuation. </li>
      *     <li>The program will then read the words from the database,
      *     sorted by frequency in descending order by calling
-     *     {@link Database#getAllWords()}.</li>
+     *     {@link DatabaseController#getAllWords()}.</li>
      *     <li>Finally, the program will populate the {@code wordTableView}
      *     in the GUI with the results.</li>
      * </ol>
@@ -104,7 +104,7 @@ public class TextAnalyzerController implements Initializable {
         wordTableView.getItems().clear();
         wordTableView.setEditable(false);
 
-        Database.createSchema();
+        DatabaseController.createSchema();
 
         if (validateUrl(url)) {
             // The target URL to parse
@@ -115,7 +115,7 @@ public class TextAnalyzerController implements Initializable {
                 BufferedReader targetHtmlContent = fetchUrlContent(targetUrl);
 
                 // Stores the HashMap key/value pairs in the database
-                Database.storeWordsIntoDatabase(targetHtmlContent);
+                DatabaseController.storeWordsIntoDatabase(targetHtmlContent);
 
                 // Populate the wordTableView in the GUI with the results
                 displaySortedWords();
@@ -136,14 +136,14 @@ public class TextAnalyzerController implements Initializable {
      */
     public void displaySortedWords() throws SQLException {
         int rank = 0;
-        int uniqueWords = Database.getUniqueWordCount();
-        int totalNumberOfWords = Database.getAllWordCount();
+        int uniqueWords = DatabaseController.getUniqueWordCount();
+        int totalNumberOfWords = DatabaseController.getAllWordCount();
 
         NumberFormat wordCountFormat = NumberFormat.getInstance();
 
         ObservableList<Word> words = FXCollections.observableArrayList();
 
-        ResultSet wordPairs = Database.getAllWords();
+        ResultSet wordPairs = DatabaseController.getAllWords();
 
         while (wordPairs.next()) {
             words.add(new Word(++rank, wordPairs.getString("wordContent"), wordPairs.getInt("wordFrequency")));

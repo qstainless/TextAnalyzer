@@ -13,7 +13,7 @@ import java.util.*;
  * 2. Will connect to host:localhost at default MySQL port 3306
  * 3. Assumes that a user exists with username/passwrd textanalyzer/textanalyzer
  */
-public class Database {
+public class DatabaseController {
     private static final String databaseName = "word_occurrences";
     private static final String databaseTable = "word";
     private static Connection dbConnection;
