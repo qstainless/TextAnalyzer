@@ -23,7 +23,7 @@ import java.util.*;
 /**
  * This is the main controller for the GUI of the TextAnalyzer application.
  */
-public class TextAnalyzerUIController implements Initializable {
+public class TextAnalyzerController implements Initializable {
 
     @FXML
     private Label messageLabel;
@@ -83,7 +83,7 @@ public class TextAnalyzerUIController implements Initializable {
      * for analysis, as follows:
      * <ol>
      *     <li>First, it attempts to fetch the content from the URL by
-     *     calling the {@link TextAnalyzerUIController#fetchUrlContent}
+     *     calling the {@link TextAnalyzerController#fetchUrlContent}
      *     method. If the URL is empty or invalid (not found/malformed
      *     URL), the program will display an error message.</li>
      *     <li>Next, the program will call the

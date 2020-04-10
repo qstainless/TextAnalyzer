@@ -70,7 +70,7 @@ public class Database {
         // Add words and their frequency to the database
         while ((inputLine = urlContent.readLine()) != null) {
             // convert the html formatted line to plain text
-            String filteredInputLine = TextAnalyzerUIController.htmlToText(inputLine);
+            String filteredInputLine = TextAnalyzerController.htmlToText(inputLine);
 
             // extract words from filteredInputLine using StringTokenizer
             StringTokenizer wordsInLine = new StringTokenizer(filteredInputLine);

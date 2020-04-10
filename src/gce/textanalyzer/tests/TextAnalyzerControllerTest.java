@@ -1,7 +1,7 @@
 package gce.textanalyzer.tests;
 
 import gce.textanalyzer.controller.Database;
-import gce.textanalyzer.controller.TextAnalyzerUIController;
+import gce.textanalyzer.controller.TextAnalyzerController;
 import org.junit.jupiter.api.*;
 
 import java.io.BufferedReader;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class TextAnalyzerUIControllerTest {
+class TextAnalyzerControllerTest {
 
     static final String malformedUrl = "a malformed url";
     static final String invalidUrl = "http://shakespeare.mit.edu/macbeth/fulls.html";
@@ -29,7 +29,7 @@ class TextAnalyzerUIControllerTest {
     @Order(1)
     @DisplayName("A malformed URL was given. Should throw a MalformedURLException.")
     void testAMalformedUrl() {
-        assertThrows(MalformedURLException.class, () -> TextAnalyzerUIController.fetchUrlContent(malformedUrl)
+        assertThrows(MalformedURLException.class, () -> TextAnalyzerController.fetchUrlContent(malformedUrl)
         );
     }
 
@@ -40,7 +40,7 @@ class TextAnalyzerUIControllerTest {
     @Order(2)
     @DisplayName("An invalid URL was given. Should throw a FileNotFoundException.")
     void testAnInvalidUrl() {
-        assertThrows(FileNotFoundException.class, () -> TextAnalyzerUIController.fetchUrlContent(invalidUrl)
+        assertThrows(FileNotFoundException.class, () -> TextAnalyzerController.fetchUrlContent(invalidUrl)
         );
     }
 
@@ -53,7 +53,7 @@ class TextAnalyzerUIControllerTest {
     @Order(3)
     @DisplayName("A valid URL was given. Should not throw an IOException.")
     void testAValidUrl() throws IOException {
-        assertNotNull(TextAnalyzerUIController.fetchUrlContent(validUrl));
+        assertNotNull(TextAnalyzerController.fetchUrlContent(validUrl));
     }
 
     /**
@@ -81,7 +81,7 @@ class TextAnalyzerUIControllerTest {
     @Order(6)
     @DisplayName("Populates the database with words from http://shakespeare.mit.edu/macbeth/full.html")
     public void testGetData() throws IOException, SQLException {
-        BufferedReader targetHtmlContent = TextAnalyzerUIController.fetchUrlContent("http://shakespeare.mit.edu/macbeth/full.html");
+        BufferedReader targetHtmlContent = TextAnalyzerController.fetchUrlContent("http://shakespeare.mit.edu/macbeth/full.html");
         Database.storeWordsIntoDatabase(targetHtmlContent);
     }
 
