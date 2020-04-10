@@ -74,6 +74,14 @@ public class TextAnalyzerUIController implements Initializable {
     }
 
     /**
+     * Action to perform when the Exit button is clicked
+     */
+    @FXML
+    public void handleQuitButtonAction() {
+        System.exit(0);
+    }
+
+    /**
      * Takes the URL provided in the {@code targetUrl} textfield and processes it
      * for analysis, as follows:
      * <ol>
