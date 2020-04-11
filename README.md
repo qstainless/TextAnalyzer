@@ -77,7 +77,7 @@ The following will be considered as 'words' by the program because the lines do 
 That is because the program parses the target URL line by line. Lines that begin with "<" or end with ">" are ignored for purposes of counting words in them. 
 
 ## Todo
-Refactor the `countWordFrequencies` method to detect lines that begin with "<" and ignore all following lines up to and including the next line with a closing ">." Because the parser will ignore the lines, there will be no need to call the `htmlToText` method.
+Refactor the `countWordFrequencies` method to detect lines that begin with "<" and ignore all following lines up to and including the next line with a closing ">." Because the parser will ignore the lines, there will be no need to call the `htmlToText` method. The [Jsoup](https://jsoup.org/) library seems like a viable solution.
 
 ## Version history
 The version numbering of this project does not follow most version numbering guidelines. Instead, it is limited to a two-token concept:
