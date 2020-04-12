@@ -83,10 +83,9 @@ public class TextAnalyzerController implements Initializable {
      * Takes the URL provided in the {@code targetUrl} textfield and processes it
      * for analysis, as follows:
      * <ol>
-     *     <li>First, it attempts to fetch the content from the URL by
-     *     calling the {@link TextAnalyzerController#fetchUrlContent}
-     *     method. If the URL is empty or invalid (not found/malformed
-     *     URL), the program will display an error message.</li>
+     *     <li>First, it uses Jsoup to fetch the content from the URL and clean
+     *     up the HTML for better parsing. If the URL is empty or invalid (not
+     *     found/malformed URL), the program will display an error message.</li>
      *     <li>Next, the program will call the
      *     {@link DatabaseController#storeWordsIntoDatabase} method to store the
      *     unique words and their frequencies in the database, after
@@ -170,17 +169,6 @@ public class TextAnalyzerController implements Initializable {
      */
     public boolean validateUrl(String url) {
         return textFieldNotEmpty(url, messageLabel, "The URL must be valid and cannot be empty.");
-    }
-
-    /**
-     * Attempts to fetch the URL provided by the user in the GUI.
-     *
-     * @param targetUrl the target url
-     * @return The buffered URL content
-     * @throws IOException the IO Exception
-     */
-    public static BufferedReader fetchUrlContent(String targetUrl) throws IOException {
-        return new BufferedReader(new StringReader(Jsoup.connect(targetUrl).get().toString()));
     }
 
     /**
