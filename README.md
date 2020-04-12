@@ -28,6 +28,8 @@ As of version 1.7, the program includes unit tests created using Junit.
 ## System requirements
 The program is a JavaFX application using version 8 of Amazon's distribution of the Open Java Development Kit (OpenJDK) [Corretto 8](https://aws.amazon.com/corretto/), which includes JavaFX 8. Unit tests were created using [Junit 5](https://github.com/junit-team/junit5/).
 
+The program requires the [Jsoup](https://jsoup.org) Java HTML parsing library.
+
 ## Database connection defaults
 The program assumes that an existing database user with all database privileges in the local MySQL database with username/password: textanalyzer/textanalyzer. It also assumes that it will connect to localhost using default port 3306. However, the user may change these initial configuration options by editing lines 32 to 35 in the `Database` class: 
 
@@ -76,8 +78,7 @@ The following will be considered as 'words' by the program because the lines do 
 
 That is because the program parses the target URL line by line. Lines that begin with "<" or end with ">" are ignored for purposes of counting words in them. 
 
-## Todo
-Refactor the `countWordFrequencies` method to detect lines that begin with "<" and ignore all following lines up to and including the next line with a closing ">." Because the parser will ignore the lines, there will be no need to call the `htmlToText` method. The [Jsoup](https://jsoup.org/) library seems like a viable solution.
+To resolve this issue and to avoid having to reinvent the wheel, I re-implemented the Jsoup library, which creates a clean HTML version of the target URL.
 
 ## Version history
 The version numbering of this project does not follow most version numbering guidelines. Instead, it is limited to a two-token concept:
