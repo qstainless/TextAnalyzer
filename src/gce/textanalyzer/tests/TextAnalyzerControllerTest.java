@@ -1,26 +1,22 @@
 package gce.textanalyzer.tests;
 
 import gce.textanalyzer.controller.DatabaseController;
-import gce.textanalyzer.controller.TextAnalyzerController;
 import org.jsoup.Jsoup;
 import org.junit.jupiter.api.*;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TextAnalyzerControllerTest {
 
-    static final String malformedUrl = "a malformed url";
-    static final String invalidUrl = "http://shakespeare.mit.edu/macbeth/fulls.html";
     static final String validUrl = "http://shakespeare.mit.edu/macbeth/full.html";
 
     /**
