@@ -118,7 +118,7 @@ public class TextAnalyzerController implements Initializable {
                 // Buffer the targetHtmlContent String for parsing
                 BufferedReader bufferedHtmlContent = new BufferedReader(new StringReader(targetHtmlContent));
 
-                // Stores the HashMap key/value pairs in the database
+                // Stores the words and their frequencies in the database
                 DatabaseController.storeWordsIntoDatabase(bufferedHtmlContent);
 
                 // Populate the wordTableView in the GUI with the results
