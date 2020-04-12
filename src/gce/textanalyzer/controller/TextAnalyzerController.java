@@ -10,14 +10,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.jsoup.Jsoup;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.URL;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.ResourceBundle;
 
 /**
  * This is the main controller for the GUI of the TextAnalyzer application.
@@ -110,11 +112,14 @@ public class TextAnalyzerController implements Initializable {
             String targetUrl = urlTextField.getText();
 
             try {
-                // Fetch the URL content
-                BufferedReader targetHtmlContent = fetchUrlContent(targetUrl);
+                // Uses the Jsoup library to fetch the targetUrl and create a clean HTML string thereof
+                String targetHtmlContent = Jsoup.connect(targetUrl).get().text();
+
+                // Buffer the targetHtmlContent String for parsing
+                BufferedReader bufferedHtmlContent = new BufferedReader(new StringReader(targetHtmlContent));
 
                 // Stores the HashMap key/value pairs in the database
-                DatabaseController.storeWordsIntoDatabase(targetHtmlContent);
+                DatabaseController.storeWordsIntoDatabase(bufferedHtmlContent);
 
                 // Populate the wordTableView in the GUI with the results
                 displaySortedWords();
@@ -175,7 +180,7 @@ public class TextAnalyzerController implements Initializable {
      * @throws IOException the IO Exception
      */
     public static BufferedReader fetchUrlContent(String targetUrl) throws IOException {
-        return new BufferedReader(new InputStreamReader(new URL(targetUrl).openStream()));
+        return new BufferedReader(new StringReader(Jsoup.connect(targetUrl).get().toString()));
     }
 
     /**
@@ -190,9 +195,6 @@ public class TextAnalyzerController implements Initializable {
         return inputLine
                 .toLowerCase()
                 .replaceAll(">'", ">")
-                .replaceAll("<.*?>", "")
-                .replaceAll("<.*", "")  // hack to strip unclosed html tags
-                .replaceAll(".*?>", "") // hack to strip unopened html tags
                 .replaceAll(" '", " ")
                 .replaceAll("[!.,]'", "")
                 .replaceAll("[\\[|.?!,;:{}()\\]]", "")

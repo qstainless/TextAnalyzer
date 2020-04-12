@@ -55,9 +55,9 @@ public class DatabaseController {
     /**
      * Stores words found in the target URL and their frequencies in the database
      *
-     * @param urlContent The content of the target URL
+     * @param bufferedHtmlContent The buffered content of the target URL
      */
-    public static void storeWordsIntoDatabase(BufferedReader urlContent) {
+    public static void storeWordsIntoDatabase(BufferedReader bufferedHtmlContent) {
         try {
             // Open a connection to the database
             dbConnection = dbConnect(databaseName);
@@ -68,7 +68,7 @@ public class DatabaseController {
             String inputLine;
 
             // Add words and their frequency to the database
-            while ((inputLine = urlContent.readLine()) != null) {
+            while ((inputLine = bufferedHtmlContent.readLine()) != null) {
                 // convert the html formatted line to plain text
                 String filteredInputLine = TextAnalyzerController.htmlToText(inputLine);
 
@@ -110,7 +110,7 @@ public class DatabaseController {
                 }
             }
 
-            urlContent.close();
+            bufferedHtmlContent.close();
 
             closeConnection();
         } catch (SQLException | IOException e) {
