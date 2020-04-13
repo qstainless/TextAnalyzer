@@ -50,7 +50,9 @@ The GUI consists of a single stage (window) and a single scene (window content).
 After the results are displayed, the user may enter the URL of another file for analysis.
 
 ## Installation.
-To install the program, simply clone the repo, open it in your favorite IDE, and run it. Make sure that Java JDK 8 and JavaFX 8 are installed in your system. 
+Option 1. Clone the repo, open it in your favorite IDE, and run it. Make sure that Java JDK 8, JavaFX 8, and Junit 5 are installed in your system.
+
+Option 2. Download and run the [TextAnalyzer.jar](https://github.com/qstainless/TextAnalyzer/tree/master/out/artifacts/TextAnalyzer). 
 
 ## Known Issues
 Not all HTML files are created equal. The program's code to convert HTML files to plain text is still rudimentary, as it is unable to identify HTML tag properties in lines without opening or closing tags.
