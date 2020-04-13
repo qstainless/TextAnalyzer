@@ -97,14 +97,14 @@ Version 1.2 - First version
 
 ## Screenshots
 ### Initial prompt
-![Initial Prompt](../Screenshots/TextAnalyzer-Screenshot-Initial-Prompt.png)
+![Initial Prompt](TextAnalyzer-Screenshot-Initial-Prompt.png)
 ### Invalid URL
-![Invalid URL](../Screenshots/TextAnalyzer-Screenshot-Invalid-URL.png)
+![Invalid URL](TextAnalyzer-Screenshot-Invalid-URL.png)
 ### Results
-![Results](../Screenshots/TextAnalyzer-Screenshot-Results.png)
+![Results](TextAnalyzer-Screenshot-Results.png)
 
 ## Unit Tests
 ### formValidation Class
-![formValidation Class Unit Tests](../Screenshots/TextAnalyzer-Screenshot-Tests-formValidation.png)
+![formValidation Class Unit Tests](TextAnalyzer-Screenshot-Tests-formValidation.png)
 ### TextAnalyzerUIController Class
-![TextAnalyzerUIController Class Unit Tests](../Screenshots/TextAnalyzer-Screenshot-Tests-TextAnalyzerUIController-Database.png)
+![TextAnalyzerUIController Class Unit Tests](TextAnalyzer-Screenshot-Tests-TextAnalyzerUIController-Database.png)
