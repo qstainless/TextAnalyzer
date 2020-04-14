@@ -16,8 +16,11 @@ import java.util.*;
 public class DatabaseController {
     private static final String databaseName = "word_occurrences";
     private static final String databaseTable = "word";
+    private static final String databaseUser = "textanalyzer";
+    private static final String databasePass = "textanalyzer";
     private static Connection dbConnection;
     private static String sql;
+    private static final String exitMessage = "\n\nProgram cannot continue. Exiting.";
 
     /**
      * Creates a database connection.
@@ -31,8 +34,6 @@ public class DatabaseController {
             try {
                 String databaseHost = "localhost";
                 String databasePort = "3306";
-                String databaseUser = "textanalyzer";
-                String databasePass = "textanalyzer";
 
                 String connectionUrl = "jdbc:mysql://" + databaseHost + ":" + databasePort + "/" + databaseName +
                         "?useUnicode=true" +
@@ -40,13 +41,21 @@ public class DatabaseController {
                         "&useLegacyDatetimeCode=false" +
                         "&serverTimezone=UTC";
                 dbConnection = DriverManager.getConnection(connectionUrl, databaseUser, databasePass);
-            } catch (SQLException ex) {
-                System.out.println("Failed to create the database connection.");
-                ex.printStackTrace();
+            } catch (SQLException e) {
+                System.out.println("Failed to create the database connection.\n");
+                System.out.println("Please ensure that:\n" +
+                        "1. Your MySQL server is running and is accessible through localhost on port 3306.\n" +
+                        "2. Your database has a user 'textanalyzer' with password 'textanalyzer' with all privileges.\n" +
+                        "3. Verify database credentials." +
+                        exitMessage);
+                System.exit(1);
             }
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Driver not found.");
-            ex.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("The MySQL Driver 'com.mysql.cj.jdbc.Driver' could not be found.\n\n" +
+                    "Please install the JDBC Driver for MySQL from: https://dev.mysql.com/downloads/connector/j/" +
+                    exitMessage);
+            e.printStackTrace();
+            System.exit(1);
         }
 
         return dbConnection;
@@ -212,8 +221,12 @@ public class DatabaseController {
             statement.executeUpdate(sql);
 
             statement.close();
-        } catch (SQLException se) {
-            se.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Unable to create schema `" + databaseName + "`\n\n" +
+                    "Make sure that the MySQL user `" + databaseUser + "` with password `" + databasePass +
+                    " exists with full privileges." +
+                    exitMessage);
+            System.exit(1);
         } finally {
             closeConnection();
         }
@@ -226,7 +239,8 @@ public class DatabaseController {
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Unable to close the database connection." +
+                    exitMessage);
         }
     }
 }

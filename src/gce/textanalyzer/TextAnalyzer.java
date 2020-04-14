@@ -39,7 +39,8 @@ public class TextAnalyzer extends Application {
             primaryStage.setResizable(false);
             primaryStage.show();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("It seems that JavaFX is not properly installed in your system.\n\n" +
+                    "Program cannot continue. Exiting.");
         }
     }
 }

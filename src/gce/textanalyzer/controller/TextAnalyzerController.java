@@ -171,7 +171,7 @@ public class TextAnalyzerController implements Initializable {
         } catch (SQLException e) {
             messageLabel.setText("A database error occurred fetching the word/frequency pairs. " +
                     "See console for additional details.");
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
     }
 
@@ -253,7 +253,7 @@ public class TextAnalyzerController implements Initializable {
             URL url = new URL(targetUrl);
             url.toURI();
             return true;
-        } catch (Exception exception) {
+        } catch (Exception e) {
             return false;
         }
     }
