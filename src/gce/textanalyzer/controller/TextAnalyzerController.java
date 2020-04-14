@@ -110,10 +110,16 @@ public class TextAnalyzerController implements Initializable {
             // The target URL to parse
             String targetUrl = urlTextField.getText();
 
-            try {
-                // Uses the Jsoup library to fetch the targetUrl and create a clean HTML string thereof
-                String targetHtmlContent = Jsoup.connect(targetUrl).get().text();
+            // Uses the Jsoup library to fetch the targetUrl and create a clean HTML string thereof
+            String targetHtmlContent = null;
 
+            try {
+                targetHtmlContent = Jsoup.connect(targetUrl).get().text();
+            } catch (IOException e) {
+                messageLabel.setText("The URL entered is invalid.");
+            }
+
+            if (targetHtmlContent != null) {
                 // Buffer the targetHtmlContent String for parsing
                 BufferedReader bufferedHtmlContent = new BufferedReader(new StringReader(targetHtmlContent));
 
@@ -122,15 +128,11 @@ public class TextAnalyzerController implements Initializable {
                     DatabaseController.storeWordsIntoDatabase(bufferedHtmlContent);
                 } catch (SQLException | IOException e) {
                     messageLabel.setText("An error occurred attempting to store words and their frequencies into the " +
-                            "database. See console for additional details.");
-                    e.printStackTrace();
+                            "database.");
                 }
 
                 // Populate the wordTableView in the GUI with the results
                 displaySortedWords();
-            } catch (IOException e) {
-                messageLabel.setText("An error occurred. An invalid URL, perhaps? See console for additional details.");
-                e.printStackTrace();
             }
         }
     }
@@ -208,10 +210,9 @@ public class TextAnalyzerController implements Initializable {
      *
      * @param targetUrl The value of the URL textfield.
      * @return True if the URL textfield is not empty
-     *
      * @see TextAnalyzerController#textFieldNotEmpty(String, Label, String)
      */
-    public static boolean textFieldNotEmpty (String targetUrl) {
+    public static boolean textFieldNotEmpty(String targetUrl) {
         boolean out = false;
 
         if (targetUrl != null && !targetUrl.isEmpty() && isValidURL(targetUrl)) {
@@ -222,12 +223,12 @@ public class TextAnalyzerController implements Initializable {
     }
 
     /**
-     * @param targetUrl The value of the URL textfield.
-     * @param messageLabel Placeholder in the GUI for error messages
+     * @param targetUrl      The value of the URL textfield.
+     * @param messageLabel   Placeholder in the GUI for error messages
      * @param validationText Feedback to user on errors.
      * @return True if the URL textfield is not empty
      */
-    public static boolean textFieldNotEmpty (String targetUrl, Label messageLabel, String validationText) {
+    public static boolean textFieldNotEmpty(String targetUrl, Label messageLabel, String validationText) {
         boolean out = true;
         String message = null;
 
