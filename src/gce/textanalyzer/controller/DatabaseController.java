@@ -57,85 +57,77 @@ public class DatabaseController {
      *
      * @param bufferedHtmlContent The buffered content of the target URL
      */
-    public static void storeWordsIntoDatabase(BufferedReader bufferedHtmlContent) {
-        try {
-            // Open a connection to the database
-            dbConnection = dbConnect(databaseName);
+    public static void storeWordsIntoDatabase(BufferedReader bufferedHtmlContent) throws SQLException, IOException {
+        // Open a connection to the database
+        dbConnection = dbConnect(databaseName);
 
-            PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement;
 
-            // Temporary string to store each line of the buffered urlContent
-            String inputLine;
+        // Temporary string to store each line of the buffered urlContent
+        String inputLine;
 
-            // Add words and their frequency to the database
-            while ((inputLine = bufferedHtmlContent.readLine()) != null) {
-                // convert the html formatted line to plain text
-                String filteredInputLine = TextAnalyzerController.htmlToText(inputLine);
+        // Add words and their frequency to the database
+        while ((inputLine = bufferedHtmlContent.readLine()) != null) {
+            // convert the html formatted line to plain text
+            String filteredInputLine = TextAnalyzerController.htmlToText(inputLine);
 
-                // extract words from filteredInputLine using StringTokenizer
-                StringTokenizer wordsInLine = new StringTokenizer(filteredInputLine);
+            // extract words from filteredInputLine using StringTokenizer
+            StringTokenizer wordsInLine = new StringTokenizer(filteredInputLine);
 
-                // add words and their frequencies to the database
-                while (wordsInLine.hasMoreTokens()) {
-                    String word = wordsInLine.nextToken();
+            // add words and their frequencies to the database
+            while (wordsInLine.hasMoreTokens()) {
+                String word = wordsInLine.nextToken();
 
-                    // Limit word length to 255 characters
-                    if (word.length() > 254) {
-                        word = word.substring(0, 254);
-                    }
-
-                    sql = "SELECT `wordFrequency` FROM " + databaseTable + " WHERE `wordContent`= '" + word.replace("'", "\\'") + "'";
-
-                    Statement statement = dbConnection.createStatement();
-                    ResultSet resultSet = statement.executeQuery(sql);
-
-                    if (resultSet.next()) {
-                        int currentWordFrequency = resultSet.getInt("wordFrequency");
-                        int newWordFrequency = currentWordFrequency + 1;
-
-                        sql = "UPDATE " + databaseTable + " SET `wordFrequency`=? WHERE `wordContent`=?";
-
-                        preparedStatement = dbConnection.prepareStatement(sql);
-                        preparedStatement.setInt(1, newWordFrequency);
-                        preparedStatement.setString(2, word);
-                    } else {
-                        sql = "INSERT INTO " + databaseTable + " (`wordContent`, `wordFrequency`) VALUES (?,?)";
-
-                        preparedStatement = dbConnection.prepareStatement(sql);
-                        preparedStatement.setString(1, word);
-                        preparedStatement.setInt(2, 1);
-                    }
-
-                    preparedStatement.executeUpdate();
+                // Limit word length to 255 characters
+                if (word.length() > 254) {
+                    word = word.substring(0, 254);
                 }
+
+                sql = "SELECT `wordFrequency` FROM " + databaseTable + " WHERE `wordContent`= '" + word.replace("'", "\\'") + "'";
+
+                Statement statement = dbConnection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+
+                if (resultSet.next()) {
+                    int currentWordFrequency = resultSet.getInt("wordFrequency");
+                    int newWordFrequency = currentWordFrequency + 1;
+
+                    sql = "UPDATE " + databaseTable + " SET `wordFrequency`=? WHERE `wordContent`=?";
+
+                    preparedStatement = dbConnection.prepareStatement(sql);
+                    preparedStatement.setInt(1, newWordFrequency);
+                    preparedStatement.setString(2, word);
+                } else {
+                    sql = "INSERT INTO " + databaseTable + " (`wordContent`, `wordFrequency`) VALUES (?,?)";
+
+                    preparedStatement = dbConnection.prepareStatement(sql);
+                    preparedStatement.setString(1, word);
+                    preparedStatement.setInt(2, 1);
+                }
+
+                preparedStatement.executeUpdate();
             }
-
-            bufferedHtmlContent.close();
-
-            closeConnection();
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
         }
+
+        bufferedHtmlContent.close();
+
+        closeConnection();
     }
 
     /**
      * Reads all word/frequency pairs from the database.
      */
-    public static ResultSet getAllWords() {
+    public static ResultSet getAllWords() throws SQLException {
         Statement statement;
         ResultSet resultSet = null;
 
-        try {
-            dbConnection = dbConnect(databaseName);
+        dbConnection = dbConnect(databaseName);
 
-            sql = "SELECT `wordContent`, `wordFrequency` FROM `word` ORDER BY `wordFrequency` DESC";
+        sql = "SELECT `wordContent`, `wordFrequency` FROM `word` ORDER BY `wordFrequency` DESC";
 
-            statement = dbConnection.createStatement();
+        statement = dbConnection.createStatement();
 
-            resultSet = statement.executeQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        resultSet = statement.executeQuery(sql);
 
         return resultSet;
     }

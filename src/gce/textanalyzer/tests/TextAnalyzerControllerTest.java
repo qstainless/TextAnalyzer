@@ -46,7 +46,11 @@ class TextAnalyzerControllerTest {
     public void testGetData() throws IOException {
         String targetHtmlContent = Jsoup.connect(validUrl).get().text();
         BufferedReader bufferedHtmlContent = new BufferedReader(new StringReader(targetHtmlContent));
-        DatabaseController.storeWordsIntoDatabase(bufferedHtmlContent);
+        try {
+            DatabaseController.storeWordsIntoDatabase(bufferedHtmlContent);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

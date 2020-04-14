@@ -118,14 +118,19 @@ public class TextAnalyzerController implements Initializable {
                 BufferedReader bufferedHtmlContent = new BufferedReader(new StringReader(targetHtmlContent));
 
                 // Stores the words and their frequencies in the database
-                DatabaseController.storeWordsIntoDatabase(bufferedHtmlContent);
+                try {
+                    DatabaseController.storeWordsIntoDatabase(bufferedHtmlContent);
+                } catch (SQLException | IOException e) {
+                    messageLabel.setText("An error occurred attempting to store words and their frequencies into the " +
+                            "database. See console for additional details.");
+                    e.printStackTrace();
+                }
 
                 // Populate the wordTableView in the GUI with the results
                 displaySortedWords();
-            } catch (IOException | SQLException e) {
-                textFieldNotEmpty(null, messageLabel, "An error occurred. An invalid URL, perhaps? " +
-                        "See console for additional details.");
-                System.out.println(e);
+            } catch (IOException e) {
+                messageLabel.setText("An error occurred. An invalid URL, perhaps? See console for additional details.");
+                e.printStackTrace();
             }
         }
     }
@@ -137,28 +142,35 @@ public class TextAnalyzerController implements Initializable {
      * order. Displays the total number of words and number of unique words
      * found in the source URL.
      */
-    public void displaySortedWords() throws SQLException {
+    public void displaySortedWords() {
         int rank = 0;
-        int uniqueWords = DatabaseController.getUniqueWordCount();
-        int totalNumberOfWords = DatabaseController.getAllWordCount();
+        int uniqueWords;
+        int totalNumberOfWords;
 
         NumberFormat wordCountFormat = NumberFormat.getInstance();
 
         ObservableList<Word> words = FXCollections.observableArrayList();
 
-        ResultSet wordPairs = DatabaseController.getAllWords();
+        try {
+            ResultSet wordPairs = DatabaseController.getAllWords();
+            uniqueWords = DatabaseController.getUniqueWordCount();
+            totalNumberOfWords = DatabaseController.getAllWordCount();
+            while (wordPairs.next()) {
+                words.add(new Word(++rank, wordPairs.getString("wordContent"), wordPairs.getInt("wordFrequency")));
+            }
 
-        while (wordPairs.next()) {
-            words.add(new Word(++rank, wordPairs.getString("wordContent"), wordPairs.getInt("wordFrequency")));
+            wordPairs.close();
+
+            messageLabel.setText("After parsing, " + wordCountFormat.format(uniqueWords)
+                    + " unique words were found, out of a total of "
+                    + wordCountFormat.format(totalNumberOfWords) + " words.");
+
+            wordTableView.setItems(words);
+        } catch (SQLException e) {
+            messageLabel.setText("A database error occurred fetching the word/frequency pairs. " +
+                    "See console for additional details.");
+            e.printStackTrace();
         }
-
-        wordPairs.close();
-
-        messageLabel.setText("After parsing, " + wordCountFormat.format(uniqueWords)
-                + " unique words were found, out of a total of "
-                + wordCountFormat.format(totalNumberOfWords) + " words.");
-
-        wordTableView.setItems(words);
     }
 
     /**
