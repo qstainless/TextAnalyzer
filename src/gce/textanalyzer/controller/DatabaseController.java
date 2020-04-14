@@ -192,11 +192,11 @@ public class DatabaseController {
             Statement statement = dbConnection.createStatement();
 
             // Create the schema if it does not already exist
-            sql = "CREATE SCHEMA IF NOT EXISTS `word_occurrences` DEFAULT CHARACTER SET utf8";
+            sql = "CREATE SCHEMA IF NOT EXISTS `" + databaseName + "` DEFAULT CHARACTER SET utf8";
             statement.executeUpdate(sql);
 
             // Select the database
-            sql = "USE `word_occurrences`";
+            sql = "USE `" + databaseName + "`";
             statement.executeUpdate(sql);
 
             // Create the table if it does not already exist
