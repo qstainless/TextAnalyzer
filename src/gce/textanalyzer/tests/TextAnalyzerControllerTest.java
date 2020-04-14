@@ -22,11 +22,22 @@ class TextAnalyzerControllerTest {
      * Tests the database connection
      */
     @Test
-    @Order(4)
+    @Order(3)
     @DisplayName("A database connection is successfully created.")
     void testDatabaseConnection() {
         Connection connection = DatabaseController.dbConnect("word_occurrences");
         assertNotNull(connection);
+    }
+
+    /**
+     * Tests the database connection
+     */
+    @Test
+    @Order(4)
+    @DisplayName("Fails to create the database connection.")
+    void testBadDatabaseConnection() {
+        Connection connection = DatabaseController.dbConnect("words_occurrences");
+        assertNull(connection);
     }
 
     /**
