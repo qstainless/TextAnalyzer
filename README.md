@@ -50,7 +50,7 @@ The GUI consists of a single stage (window) and a single scene (window content).
 After the results are displayed, the user may enter the URL of another file for analysis.
 
 ## Installation.
-Option 1. Clone the repo and import it in your favorite IDE. Make sure that:
+Option 1. Clone the repo and import it into your favorite Java IDE. Make sure that:
  1. The project SDK is Java 8 with project language level 8, and
  2. JavaFX 8, Junit 5, [Jsoup](https://jsoup.org), and the Oracle [JDBC Driver](https://dev.mysql.com/downloads/connector/j/) for MySQL are installed in your system.
 
